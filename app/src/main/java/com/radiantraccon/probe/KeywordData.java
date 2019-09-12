@@ -9,7 +9,7 @@ public class KeywordData {
         return title;
     }
 
-    public void SetTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -17,7 +17,7 @@ public class KeywordData {
         return desc;
     }
 
-    public void SetDescription(String desc) {
+    public void setDescription(String desc) {
         this.desc = desc;
     }
 

@@ -9,11 +9,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder> {
-    private List<KeywordData> keywordDataList;
+    private ArrayList<KeywordData> keywordDataList;
 
+    public KeywordAdapter(ArrayList<KeywordData> dataList) {
+        this.keywordDataList = dataList;
+    }
     @Override
     public KeywordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_keyword_item, parent,false);
@@ -31,6 +35,9 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
         return keywordDataList.size();
     }
 
+    public void addKeywordData(KeywordData data) {
+        keywordDataList.add(data);
+    }
 
     // keyword view holder class
     public class KeywordViewHolder extends RecyclerView.ViewHolder {

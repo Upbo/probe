@@ -9,12 +9,15 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
 
     String[] permissionList = {
             Manifest.permission.INTERNET
     };
-
+    ArrayList<KeywordData> keywordDataList;
     KeywordAdapter keywordAdapter;
 
     @Override
@@ -28,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Initialize recyclerView of favorite keyword items
+        keywordDataList = new ArrayList<>();
+        KeywordData d = new KeywordData();
+        d.setImageId(R.drawable.ic_launcher_background);
+        d.setTitle("TEST");
+        d.setDescription("THIS IS A TEST DATA");
+        keywordDataList.add(d);
         setRecyclerView();
     }
 
@@ -36,15 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        keywordAdapter = new KeywordAdapter();
+        keywordAdapter = new KeywordAdapter(keywordDataList);
         recyclerView.setAdapter(keywordAdapter);
 
-    }
-
-    private void setRecyclerViewData() {
-        KeywordData data = new KeywordData();
-
-        //keywordAdapter.AddItem(data)
     }
 
     // region Permissions
