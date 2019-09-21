@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(permissionList, 0);
         }
 
+        //////////////////////////////////
+         //region BottomNavigationView
+        BottomNavigationView bnv = findViewById(R.id.bottomNavView);
+        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return true;
+            }
+        });
+        // endregion
+        //////////////////////////////////
+
         keywordDataList = new ArrayList<>();
         /////// TEST /////////
         KeywordData d = new KeywordData();
@@ -43,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         d.setDescription("THIS IS A TEST DATA");
         keywordDataList.add(d);
         //////////////////////
+        // RecyclerView
         initRecyclerView();
     }
 
