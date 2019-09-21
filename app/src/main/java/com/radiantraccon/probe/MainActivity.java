@@ -2,6 +2,9 @@ package com.radiantraccon.probe;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,14 +23,18 @@ public class MainActivity extends AppCompatActivity {
     /*
      * Permissions
      */
-    String[] permissionList = {
+    private String[] permissionList = {
             Manifest.permission.INTERNET
     };
     // Data ArrayList of RecyclerView
-    ArrayList<KeywordData> keywordDataList;
+    private ArrayList<KeywordData> keywordDataList = new ArrayList<>(20);
     // Adapter for RecyclerView
-    KeywordAdapter keywordAdapter;
+    private KeywordAdapter keywordAdapter;
+    // FragmentManager for changing fragments
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private Fragment mainFragment = new MainFragment();
 
+    private Crawler crawler = new Crawler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +44,38 @@ public class MainActivity extends AppCompatActivity {
         if(!hasPermissions()) {
             requestPermissions(permissionList, 0);
         }
-
         //////////////////////////////////
-         //region BottomNavigationView
+        // region Fragments
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // replace or add which is better?
+        transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
+        // endregion
+        //////////////////////////////////
+        //region BottomNavigationView
         BottomNavigationView bnv = findViewById(R.id.bottomNavView);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                switch (item.getItemId()) {
+                    case R.id.navigation_menu1: {
+                        transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
+                        break;
+                    }
+                    case R.id.navigation_menu2: {
+                        break;
+                    }
+                    case R.id.navigation_menu3: {
+                        break;
+                    }
+                }
                 return true;
             }
         });
         // endregion
         //////////////////////////////////
 
-        keywordDataList = new ArrayList<>();
+
         /////// TEST /////////
         KeywordData d = new KeywordData();
         d.setImageId(R.drawable.ic_launcher_background);
@@ -98,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 0){
             for(int i=0; i<grantResults.length; i++){
                 if(grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    // if permission granted
+                    // TODO: if Permissions accepted, keep going
                 }
                 else {
-                    // if permission denied,
+                    // TODO: if Permissions denied, request agian
                 }
             }
         }
