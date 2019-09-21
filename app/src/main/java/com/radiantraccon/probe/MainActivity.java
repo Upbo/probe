@@ -8,16 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    /*
+     * Permissions
+     */
     String[] permissionList = {
             Manifest.permission.INTERNET
     };
+    // Data ArrayList of RecyclerView
     ArrayList<KeywordData> keywordDataList;
+    // Adapter for RecyclerView
     KeywordAdapter keywordAdapter;
 
     @Override
@@ -30,24 +35,36 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(permissionList, 0);
         }
 
-        // Initialize recyclerView of favorite keyword items
         keywordDataList = new ArrayList<>();
+        /////// TEST /////////
         KeywordData d = new KeywordData();
         d.setImageId(R.drawable.ic_launcher_background);
         d.setTitle("TEST");
         d.setDescription("THIS IS A TEST DATA");
         keywordDataList.add(d);
-        setRecyclerView();
+        //////////////////////
+        initRecyclerView();
     }
 
-    private void setRecyclerView() {
+    /*
+     *  Initialize RecyclerView
+     *
+     */
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
+        // Attach keywordDataList to keywordAdapter
         keywordAdapter = new KeywordAdapter(keywordDataList);
         recyclerView.setAdapter(keywordAdapter);
-
+        // Add OnItemListener to items
+        keywordAdapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                // TODO: Change View show favorite sites that include touched keyword
+            }
+        });
     }
 
     // region Permissions

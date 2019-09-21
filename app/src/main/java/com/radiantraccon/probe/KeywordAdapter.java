@@ -4,6 +4,7 @@ import android.animation.LayoutTransition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,9 +15,18 @@ import java.util.List;
 
 public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder> {
     private ArrayList<KeywordData> keywordDataList;
+    private OnItemClickListener listener = null;
 
     public KeywordAdapter(ArrayList<KeywordData> dataList) {
         this.keywordDataList = dataList;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int pos);
+    }
+
+    public void setOnItemListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
     @Override
     public KeywordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,6 +60,18 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
             icon = itemView.findViewById(R.id.imageView_icon);
             title = itemView.findViewById(R.id.textView_title);
             desc = itemView.findViewById(R.id.textView_desc);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        if(listener != null) {
+                            listener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
         }
 
         public void bind(KeywordData data) {
