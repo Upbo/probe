@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Probe</string>
+    <string name="toolbar_title">Probe</string>
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>
     <string name="bottom_menu3">Settings</string>
+    <string name="toolbar_add">Add</string>
+    <string name="toolbar_search">Search</string>
 </resources>

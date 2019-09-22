@@ -1,18 +1,20 @@
 package com.radiantraccon.probe;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
+    private Fragment optionFragment = new OptionFragment();
 
     private Crawler crawler = new Crawler();
     @Override
@@ -45,12 +48,19 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(permissionList, 0);
         }
         //////////////////////////////////
+
+
         // region Fragments
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // replace or add which is better?
         transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
         // endregion
         //////////////////////////////////
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.toolbar_title);
+
         //region BottomNavigationView
         BottomNavigationView bnv = findViewById(R.id.bottomNavView);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.navigation_menu3: {
+                        transaction.replace(R.id.frameLayout, optionFragment).commitAllowingStateLoss();
                         break;
                     }
                 }
@@ -85,6 +96,27 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////
         // RecyclerView
         initRecyclerView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.toolbar_add: {
+                // TODO: Show AlertDialog to get input data
+                break;
+            }
+            case R.id.toolbar_search: {
+                // TODO: Search item in RecyclerView
+                break;
+            }
+        }
+        return true;
     }
 
     /*
