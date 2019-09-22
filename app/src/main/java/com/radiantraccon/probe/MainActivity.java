@@ -3,11 +3,13 @@ package com.radiantraccon.probe;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.toolbar_add: {
-                // TODO: Show AlertDialog to get input data
+                showAlertDialog();
                 break;
             }
             case R.id.toolbar_search: {
@@ -117,6 +119,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+    /*
+     * Show AlertDialog to get input data
+     */
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.alertdialog_addkeyword, null);
+        builder.setView(view);
+        
     }
 
     /*
