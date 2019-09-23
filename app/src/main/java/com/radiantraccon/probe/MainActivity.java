@@ -1,12 +1,15 @@
 package com.radiantraccon.probe;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////////////////
 
 
+        //////////////////////////////////
         // region Fragments
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // replace or add which is better?
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.toolbar_title);
 
+        //////////////////////////////////
         //region BottomNavigationView
         BottomNavigationView bnv = findViewById(R.id.bottomNavView);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         // endregion
         //////////////////////////////////
 
-
+        // TODO: Load keywordDataList from internal storage
         /////// TEST /////////
         KeywordData d = new KeywordData();
         d.setImageId(R.drawable.ic_launcher_background);
@@ -99,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
         // RecyclerView
         initRecyclerView();
     }
-
+    //////////////////////////////////
+    // region Toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
@@ -120,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+    // endregion
+    //////////////////////////////////
+
     /*
      * Show AlertDialog to get input data
      */
@@ -127,7 +136,26 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.alertdialog_addkeyword, null);
         builder.setView(view);
-        
+        final Button confirmButton = findViewById(R.id.button_confirm);
+        final Button cancelButton = findViewById(R.id.button_cancel);
+        final EditText editText = findViewById(R.id.editText_keyword);
+        final AlertDialog dialog = builder.create();
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = editText.getText().toString();
+                // TODO: create new keyword data from this string
+
+                // save data to internal storage...
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // cancel vs dismiss
+                dialog.dismiss();
+            }
+        });
     }
 
     /*
@@ -151,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
     // region Permissions
     private boolean hasPermissions() {
         for (String p : permissionList) {
@@ -175,4 +204,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     // endregion
+    //////////////////////////////////
 }

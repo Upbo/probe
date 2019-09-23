@@ -9,4 +9,5 @@
     <string name="alertDialog_addKeyword"></string>
     <string name="alertDialog_title">Add your favorite keyword</string>
     <string name="alertDialog_confirm">Confirm</string>
+    <string name="alertDialog_cancel">Cancel</string>
 </resources>
