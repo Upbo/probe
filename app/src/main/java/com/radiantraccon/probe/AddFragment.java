@@ -1,0 +1,45 @@
+package com.radiantraccon.probe;
+
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
+
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AddFragment extends Fragment {
+
+    public AddFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_add, container, false);
+
+        // TODO: Initialize RecyclerView of web page addresses
+
+        final EditText keywordEditText = view.findViewById(R.id.editText_keyword);
+        Button submitButton = view.findViewById(R.id.button_submit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Send user input to MainActivity
+                String s = keywordEditText.getText().toString();
+
+            }
+        });
+        return view;
+    }
+
+}

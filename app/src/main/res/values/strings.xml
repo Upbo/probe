@@ -6,8 +6,6 @@
     <string name="bottom_menu3">Settings</string>
     <string name="toolbar_add">Add</string>
     <string name="toolbar_search">Search</string>
-    <string name="alertDialog_addKeyword"></string>
-    <string name="alertDialog_title">Add your favorite keyword</string>
-    <string name="alertDialog_confirm">Confirm</string>
-    <string name="alertDialog_cancel">Cancel</string>
+    <string name="addfragment_title">Add your keyword</string>
+
 </resources>

@@ -8,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -41,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
     private Fragment optionFragment = new OptionFragment();
+    private Fragment addFragment = new AddFragment();
 
     private Crawler crawler = new Crawler();
     @Override
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
+                    // TODO: Debug first! then change replace function to add or something else...
                     case R.id.navigation_menu1: {
                         transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
                         break;
@@ -116,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.toolbar_add: {
-                showAlertDialog();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.add(R.id.frameLayout, addFragment).commit();
                 break;
             }
             case R.id.toolbar_search: {
@@ -129,34 +129,6 @@ public class MainActivity extends AppCompatActivity {
     // endregion
     //////////////////////////////////
 
-    /*
-     * Show AlertDialog to get input data
-     */
-    private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.alertdialog_addkeyword, null);
-        builder.setView(view);
-        final Button confirmButton = findViewById(R.id.button_confirm);
-        final Button cancelButton = findViewById(R.id.button_cancel);
-        final EditText editText = findViewById(R.id.editText_keyword);
-        final AlertDialog dialog = builder.create();
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = editText.getText().toString();
-                // TODO: create new keyword data from this string
-
-                // save data to internal storage...
-            }
-        });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // cancel vs dismiss
-                dialog.dismiss();
-            }
-        });
-    }
 
     /*
      *  Initialize RecyclerView
