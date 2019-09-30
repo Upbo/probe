@@ -1,10 +1,11 @@
 package com.radiantraccon.probe;
 
 import android.Manifest;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.JsonWriter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -93,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////////////////
 
         // TODO: Load keywordDataList from internal storage
+        String json = readKeywordDataFile("data.json");
+        parseKeywordData(json);
         /////// TEST /////////
         KeywordData d = new KeywordData();
         d.setImageId(R.drawable.ic_launcher_background);
@@ -146,11 +162,84 @@ public class MainActivity extends AppCompatActivity {
         keywordAdapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                // TODO: Change View show favorite sites that include touched keyword
+                // TODO: Change View to show favorite sites that include touched keyword
             }
         });
     }
 
+    private void writeKeywordDataFile(String filename) {
+        File file = new File(filename);
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+
+        try{
+            fileWriter = new FileWriter(file);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            JsonWriter jsonWriter = new JsonWriter(bufferedWriter);
+            jsonWriter.beginArray();
+            for(KeywordData data : keywordDataList) {
+                jsonWriter.beginObject();
+                jsonWriter.name("title").value(data.getTitle());
+                jsonWriter.name("description").value(data.getDescription());
+                jsonWriter.name("imageid").value(data.getImageId());
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+        } catch(IOException e) {
+
+        }
+    }
+    private String readKeywordDataFile(String filename) {
+        String ret = null;
+        InputStream inputStream = null;
+        try {
+            inputStream = openFileInput(filename);
+            if(inputStream != null) {
+                InputStreamReader streamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+                String read = null;
+                while((read = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(read);
+                }
+                ret = stringBuilder.toString();
+            }
+
+        } catch(FileNotFoundException e) {
+            Log.e("File read", "File not found: "+e.toString());
+        } catch(IOException e) {
+            Log.e("File read", "Can't read file: "+e.toString());
+        }
+        finally {
+            try {
+                inputStream.close();
+            } catch(IOException e) {
+                Log.e("File read", "Can't close inputstream: "+e.toString());
+            }
+        }
+        return ret;
+    }
+
+    private void parseKeywordData(String json) {
+        if(json == null) {
+            return;
+        }
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            int length = jsonArray.length();
+            for(int i=0; i<length; ++i) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                KeywordData data = new KeywordData();
+                data.setTitle(jsonObject.getString("title"));
+                data.setDescription(jsonObject.getString("description"));
+                data.setImageId(jsonObject.getInt("imageid"));
+
+                keywordDataList.add(data);
+            }
+        } catch(JSONException e) {
+            Log.e("JSON parse", "Can't create JSONArray: " +e.toString());
+        }
+    }
     //////////////////////////////////
     // region Permissions
     private boolean hasPermissions() {
