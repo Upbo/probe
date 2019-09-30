@@ -1,7 +1,6 @@
 package com.radiantraccon.probe;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.JsonWriter;
@@ -33,7 +32,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         /////// TEST /////////
         KeywordData d = new KeywordData();
         d.setImageId(R.drawable.ic_launcher_background);
-        d.setTitle("TEST");
+        d.setKeyword("TEST");
         d.setDescription("THIS IS A TEST DATA");
         keywordDataList.add(d);
         //////////////////////
@@ -144,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // endregion
     //////////////////////////////////
+
 
 
     /*
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             jsonWriter.beginArray();
             for(KeywordData data : keywordDataList) {
                 jsonWriter.beginObject();
-                jsonWriter.name("title").value(data.getTitle());
+                jsonWriter.name("keyword").value(data.getKeyword());
                 jsonWriter.name("description").value(data.getDescription());
                 jsonWriter.name("imageid").value(data.getImageId());
                 jsonWriter.endObject();
@@ -230,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i<length; ++i) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 KeywordData data = new KeywordData();
-                data.setTitle(jsonObject.getString("title"));
+                data.setKeyword(jsonObject.getString("keyword"));
                 data.setDescription(jsonObject.getString("description"));
                 data.setImageId(jsonObject.getInt("imageid"));
 

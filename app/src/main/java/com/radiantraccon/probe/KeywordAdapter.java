@@ -1,17 +1,14 @@
 package com.radiantraccon.probe;
 
-import android.animation.LayoutTransition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder> {
     private ArrayList<KeywordData> keywordDataList;
@@ -58,7 +55,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
             super(itemView);
 
             icon = itemView.findViewById(R.id.imageView_icon);
-            title = itemView.findViewById(R.id.textView_title);
+            title = itemView.findViewById(R.id.textView_keyword);
             desc = itemView.findViewById(R.id.textView_desc);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +73,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
 
         public void bind(KeywordData data) {
             icon.setImageResource(data.getImageId());
-            title.setText(data.getTitle());
+            title.setText(data.getKeyword());
             desc.setText(data.getDescription());
         }
     }

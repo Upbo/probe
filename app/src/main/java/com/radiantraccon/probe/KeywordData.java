@@ -2,15 +2,15 @@ package com.radiantraccon.probe;
 
 public class KeywordData {
     private int imageId;
-    private String title;
+    private String keyword;
     private String desc;
 
-    public String getTitle() {
-        return title;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getDescription() {
