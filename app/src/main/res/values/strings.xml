@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Probe</string>
+    <string name="keywordData_filename">keyword</string>
+    <string name="addressData_filename">address</string>
     <string name="toolbar_title">Probe</string>
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>
     <string name="bottom_menu3">Settings</string>
     <string name="toolbar_add">Add</string>
     <string name="toolbar_search">Search</string>
-    <string name="addfragment_title">Add your keyword</string>
+    <string name="addFragment_title">Add your keyword</string>
+    <string name="addFragment_submit">Submit</string>
+    <string name="addFragment_address">Select Address to probe!</string>
 
 </resources>

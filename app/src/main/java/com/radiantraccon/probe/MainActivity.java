@@ -20,10 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,7 +28,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,10 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private String[] permissionList = {
             Manifest.permission.INTERNET
     };
+    // TODO: data classes could be extends abstract class
+    // ex:) class Data;
+    //      class AddressData extends Data ... etc
+    private AddressDataListWrapper addresses = new AddressDataListWrapper();
     // Data ArrayList of RecyclerView
-    private ArrayList<KeywordData> keywordDataList = new ArrayList<>(20);
-    // Adapter for RecyclerView
-    private KeywordAdapter keywordAdapter;
+    private KeywordDataListWrapper keywords = new KeywordDataListWrapper(20);
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
@@ -105,16 +102,10 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////////////////
 
         // TODO: Load keywordDataList from internal storage
-        String json = readKeywordDataFile("data.json");
-        parseKeywordData(json);
-        /////// TEST /////////
-        KeywordData d = new KeywordData();
-        d.setImageId(R.drawable.ic_launcher_background);
-        d.setKeyword("TEST");
-        d.setDescription("THIS IS A TEST DATA");
-        keywordDataList.add(d);
-        //////////////////////
+        String json = readKeywordDataFile(getString(R.string.keywordData_filename));
+        keywords.parseKeywordData(json);
         // RecyclerView
+
         initRecyclerView();
     }
     //////////////////////////////////
@@ -131,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.toolbar_add: {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.frameLayout, addFragment).commit();
+                // TODO: Get user input from addFragment and add this to keywordDataList
+                // TODO: Write keywordDataList to internal storage
                 break;
             }
             case R.id.toolbar_search: {
@@ -147,18 +140,18 @@ public class MainActivity extends AppCompatActivity {
 
     /*
      *  Initialize RecyclerView
-     *
      */
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = mainFragment.getView().findViewById(R.id.recyclerView);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        // Attach keywordDataList to keywordAdapter
-        keywordAdapter = new KeywordAdapter(keywordDataList);
-        recyclerView.setAdapter(keywordAdapter);
+
+        keywords.initAdapter();
+        KeywordAdapter adapter = keywords.getKeywordAdapter();
+        recyclerView.setAdapter(adapter);
         // Add OnItemListener to items
-        keywordAdapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
+        adapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 // TODO: Change View to show favorite sites that include touched keyword
@@ -219,26 +212,7 @@ public class MainActivity extends AppCompatActivity {
         return ret;
     }
 
-    private void parseKeywordData(String json) {
-        if(json == null) {
-            return;
-        }
-        try {
-            JSONArray jsonArray = new JSONArray(json);
-            int length = jsonArray.length();
-            for(int i=0; i<length; ++i) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                KeywordData data = new KeywordData();
-                data.setKeyword(jsonObject.getString("keyword"));
-                data.setDescription(jsonObject.getString("description"));
-                data.setImageId(jsonObject.getInt("imageid"));
 
-                keywordDataList.add(data);
-            }
-        } catch(JSONException e) {
-            Log.e("JSON parse", "Can't create JSONArray: " +e.toString());
-        }
-    }
     //////////////////////////////////
     // region Permissions
     private boolean hasPermissions() {

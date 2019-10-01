@@ -11,10 +11,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView_keyword"
+            android:id="@+id/textView_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addfragment_title" />
+            android:text="@string/addFragment_title" />
 
         <EditText
             android:id="@+id/editText_keyword"
@@ -24,9 +24,16 @@
             android:inputType="textPersonName"/>
 
         <Button
+            android:id="@+id/button_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/addFragment_address" />
+
+        <Button
             android:id="@+id/button_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/addFragment_submit" />
+
     </LinearLayout>
 </FrameLayout>
