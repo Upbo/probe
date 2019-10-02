@@ -6,8 +6,8 @@ public class AddressDataListWrapper {
 
     private ArrayList<AddressData> addressDataList;
     private AddressAdapter addressAdapter;
-    public AddressDataListWrapper(int intialCapacity) {
-        addressDataList = new ArrayList<>(intialCapacity);
+    public AddressDataListWrapper(int initialCapacity) {
+        addressDataList = new ArrayList<>(initialCapacity);
     }
 
 }
