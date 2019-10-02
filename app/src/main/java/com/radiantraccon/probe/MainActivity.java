@@ -28,6 +28,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
     };
     // TODO: data classes could be extends abstract class
     // ex:) class Data;
-    //      class AddressData extends Data ... etc
-    private AddressDataListWrapper addresses = new AddressDataListWrapper();
+    //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
-    private KeywordDataListWrapper keywords = new KeywordDataListWrapper(20);
+    public KeywordDataListWrapper keywords = new KeywordDataListWrapper(20);
+    public AddressDataListWrapper addresses = new AddressDataListWrapper(20);
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
@@ -102,12 +103,15 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////////////////
 
         // TODO: Load keywordDataList from internal storage
-        String json = readKeywordDataFile(getString(R.string.keywordData_filename));
-        keywords.parseKeywordData(json);
+        String json = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
+        ArrayList<KeywordData> list = keywords.parseKeywordData(json);
+        keywords.setKeywordDataList(list);
         // RecyclerView
 
         initRecyclerView();
     }
+
+
     //////////////////////////////////
     // region Toolbar
     @Override
@@ -157,59 +161,6 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: Change View to show favorite sites that include touched keyword
             }
         });
-    }
-
-    private void writeKeywordDataFile(String filename) {
-        File file = new File(filename);
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-
-        try{
-            fileWriter = new FileWriter(file);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            JsonWriter jsonWriter = new JsonWriter(bufferedWriter);
-            jsonWriter.beginArray();
-            for(KeywordData data : keywordDataList) {
-                jsonWriter.beginObject();
-                jsonWriter.name("keyword").value(data.getKeyword());
-                jsonWriter.name("description").value(data.getDescription());
-                jsonWriter.name("imageid").value(data.getImageId());
-                jsonWriter.endObject();
-            }
-            jsonWriter.endArray();
-        } catch(IOException e) {
-
-        }
-    }
-    private String readKeywordDataFile(String filename) {
-        String ret = null;
-        InputStream inputStream = null;
-        try {
-            inputStream = openFileInput(filename);
-            if(inputStream != null) {
-                InputStreamReader streamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(streamReader);
-                StringBuilder stringBuilder = new StringBuilder();
-                String read = null;
-                while((read = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(read);
-                }
-                ret = stringBuilder.toString();
-            }
-
-        } catch(FileNotFoundException e) {
-            Log.e("File read", "File not found: "+e.toString());
-        } catch(IOException e) {
-            Log.e("File read", "Can't read file: "+e.toString());
-        }
-        finally {
-            try {
-                inputStream.close();
-            } catch(IOException e) {
-                Log.e("File read", "Can't close inputstream: "+e.toString());
-            }
-        }
-        return ret;
     }
 
 
