@@ -19,15 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
     // ex:) class Data;
     //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
-    public KeywordDataListWrapper keywords = new KeywordDataListWrapper(20);
-    public AddressDataListWrapper addresses = new AddressDataListWrapper(20);
+    public KeywordDataListWrapper keywords;
+    public AddressDataListWrapper addresses;
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
     private Fragment optionFragment = new OptionFragment();
-    private Fragment addFragment = new AddFragment();
+    private Fragment addFragment;
 
     private Crawler crawler = new Crawler();
     @Override
@@ -125,9 +116,13 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.toolbar_add: {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                addFragment = AddFragment.newInstance(
+                        keywords.getKeywordDataList(),
+                        addresses.getAddressDataList());
                 transaction.add(R.id.frameLayout, addFragment).commit();
                 // TODO: Get user input from addFragment and add this to keywordDataList
                 // TODO: Write keywordDataList to internal storage
+
                 break;
             }
             case R.id.toolbar_search: {

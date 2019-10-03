@@ -8,20 +8,45 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddFragment extends Fragment {
+    private ArrayList<KeywordData> keywordDataList;
+    private ArrayList<AddressData> addressDataList;
 
     public AddFragment() {
         // Required empty public constructor
     }
 
+    public static AddFragment newInstance(ArrayList<KeywordData> keywordDataList,
+                                          ArrayList<AddressData> addressDataList) {
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("keywordDataList", keywordDataList);
+        args.putParcelableArrayList("addressDataList", addressDataList);
+        AddFragment fragment = new AddFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle!= null) {
+            keywordDataList = bundle.getParcelableArrayList("keywordDataList");
+            addressDataList = bundle.getParcelableArrayList("addressDataList");
+            // TODO: Must check parameter works properly
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +68,7 @@ public class AddFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.frameLayout, addressFragment);
                 fragmentTransaction.commit();
+
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
