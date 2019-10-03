@@ -16,21 +16,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class KeywordDataListWrapper {
     private ArrayList<KeywordData> keywordDataList;
     private KeywordAdapter keywordAdapter;
 
-    public KeywordDataListWrapper(int initialCapacity) {
-        keywordDataList = new ArrayList<KeywordData>(initialCapacity);
+    public KeywordDataListWrapper() {
+
+    }
+
+    public ArrayList<KeywordData> getKeywordDataList() {
+        return keywordDataList;
     }
 
     public void setKeywordDataList(ArrayList<KeywordData> list) {
         keywordDataList = list;
     }
-
     public KeywordAdapter getKeywordAdapter() {
         return keywordAdapter;
     }
@@ -108,10 +110,12 @@ public class KeywordDataListWrapper {
             int length = jsonArray.length();
             for(int i=0; i<length; ++i) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                KeywordData data = new KeywordData();
-                data.setKeyword(jsonObject.getString("keyword"));
-                data.setDescription(jsonObject.getString("description"));
-                data.setImageId(jsonObject.getInt("imageid"));
+                KeywordData data = new KeywordData(
+                        jsonObject.getInt("imageid"),
+                        jsonObject.getString("keyword"),
+                        jsonObject.getString("description")
+                );
+
                 list.add(data);
             }
             return list;
