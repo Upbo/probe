@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
+    // data list in RecyclerView
     private ArrayList<AddressData> addressDataList;
     private AddressAdapter.OnItemClickListener listener = null;
-
+    // constructor
     public AddressAdapter(ArrayList<AddressData> dataList) {
         this.addressDataList = dataList;
     }
-
+    // interface for onClicklistener
     public interface OnItemClickListener {
         void onItemClick(View v, int pos);
     }
-
     public void setOnItemListener(AddressAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
@@ -46,6 +46,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     public void addAddressData(AddressData data) {
         addressDataList.add(data);
     }
+
+    public AddressData getItem(int pos) {
+        return addressDataList.get(pos);
+    }
+
     public class AddressViewHolder extends RecyclerView.ViewHolder {
         ImageView icon;
         TextView title;

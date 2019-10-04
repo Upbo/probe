@@ -19,24 +19,24 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class KeywordDataListWrapper {
+    // data to populate the RecyclerView with
     private ArrayList<KeywordData> keywordDataList;
     private KeywordAdapter keywordAdapter;
-
+    // constructor
     public KeywordDataListWrapper() {
 
     }
-
+    // getter and setter for list
     public ArrayList<KeywordData> getKeywordDataList() {
         return keywordDataList;
     }
-
     public void setKeywordDataList(ArrayList<KeywordData> list) {
         keywordDataList = list;
     }
+    // getter and init for adapter
     public KeywordAdapter getKeywordAdapter() {
         return keywordAdapter;
     }
-
     public void initAdapter() {
         keywordAdapter = new KeywordAdapter(keywordDataList);
     }

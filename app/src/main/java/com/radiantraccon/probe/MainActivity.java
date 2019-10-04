@@ -3,8 +3,6 @@ package com.radiantraccon.probe;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.JsonWriter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
     private Fragment optionFragment = new OptionFragment();
-    private Fragment addFragment;
+    private Fragment addFragment = new AddFragment();
+    private Fragment addressFragment = new AddressFragment();
+
 
     private Crawler crawler = new Crawler();
     @Override
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         String json = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
         ArrayList<KeywordData> list = keywords.parseKeywordData(json);
         keywords.setKeywordDataList(list);
+        keywords.initAdapter();
         // RecyclerView
 
         initRecyclerView();
@@ -116,9 +117,6 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.toolbar_add: {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                addFragment = AddFragment.newInstance(
-                        keywords.getKeywordDataList(),
-                        addresses.getAddressDataList());
                 transaction.add(R.id.frameLayout, addFragment).commit();
                 // TODO: Get user input from addFragment and add this to keywordDataList
                 // TODO: Write keywordDataList to internal storage
@@ -182,6 +180,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void showAddressFragment() {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.frameLayout, addressFragment).commit();
+    }
+
+    public void onAddFragmentSubmit() {
+
+    }
+
+    public void onAddressFragmentSubmit(AddressData data) {
+
     }
     // endregion
     //////////////////////////////////

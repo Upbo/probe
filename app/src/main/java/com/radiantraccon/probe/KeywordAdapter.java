@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder> {
+    // data list in RecyclerView
     private ArrayList<KeywordData> keywordDataList;
     private OnItemClickListener listener = null;
 
@@ -40,6 +41,10 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
     @Override
     public int getItemCount() {
         return keywordDataList.size();
+    }
+
+    public KeywordData getItem(int pos) {
+        return keywordDataList.get(pos);
     }
 
     public void addKeywordData(KeywordData data) {
