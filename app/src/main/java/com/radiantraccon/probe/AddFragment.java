@@ -42,7 +42,7 @@ public class AddFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: Send user input to MainActivity
                 String s = keywordEditText.getText().toString();
-                ((MainActivity)getActivity()).onAddFragmentSubmit();
+                ((MainActivity)getActivity()).onAddFragmentSubmit(s);
             }
         });
         return view;

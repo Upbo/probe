@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 public class AddressFragment extends Fragment {
 
     public AddressDataListWrapper addresses;
-
     public AddressFragment() {
         // Required empty public constructor
         addresses = new AddressDataListWrapper();
@@ -36,13 +35,12 @@ public class AddressFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         addresses.initAdapter();
-        AddressAdapter adapter = addresses.getAddressAdapter();
+        final AddressAdapter adapter = addresses.getAddressAdapter();
         recyclerView.setAdapter(adapter);
         adapter.setOnItemListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                ((MainActivity)getActivity()).onAddressFragmentSubmit(addresses.getAddressAdapter().getItem(pos));
-
+                ((MainActivity)getActivity()).onAddressFragmentSubmit(adapter.getItem(pos));
             }
         });
 

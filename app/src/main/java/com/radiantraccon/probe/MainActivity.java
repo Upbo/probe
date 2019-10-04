@@ -187,12 +187,23 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.frameLayout, addressFragment).commit();
     }
 
-    public void onAddFragmentSubmit() {
+    private AddressData selected;
+    public void onAddFragmentSubmit(String keyword) {
+        keywords.addKeywordData(new KeywordData(0, keyword, "desc here"));
+        /* TODO: IMPORTANT! change keyword data structure
+           int imageId
+           String keyword
+           String address
+           String desc
+           so this method should add these to recyclerview list
+           
+           if touch this item in recylcerview, go to crawled data directly
 
+        */
     }
 
     public void onAddressFragmentSubmit(AddressData data) {
-
+        selected = data;
     }
     // endregion
     //////////////////////////////////
