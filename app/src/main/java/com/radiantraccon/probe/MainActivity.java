@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
     public KeywordDataListWrapper keywords;
-    public AddressDataListWrapper addresses;
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
@@ -189,9 +188,14 @@ public class MainActivity extends AppCompatActivity {
 
     private AddressData selected;
     public void onAddFragmentSubmit(String keyword) {
+        if(selected == null || keyword.equals("")) {
+            // TODO: DEBUG. R.id.frameLayout? R.id.fragment_add?
+            ((AddFragment)fragmentManager.findFragmentById(R.id.frameLayout)).showDialog();
+        }
         keywords.addKeywordData(new KeywordData(0, keyword, selected.getAddress(),"desc here"));
         keywords.sort();
         keywords.getKeywordAdapter().notifyDataSetChanged();
+        selected = null;
     }
 
     public void onAddressFragmentSubmit(AddressData data) {

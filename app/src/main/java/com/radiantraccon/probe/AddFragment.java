@@ -48,4 +48,8 @@ public class AddFragment extends Fragment {
         return view;
     }
 
+    public void showDialog() {
+
+    }
+
 }
