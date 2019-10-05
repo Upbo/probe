@@ -3,14 +3,16 @@ package com.radiantraccon.probe;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class KeywordData implements Parcelable {
+public class KeywordData {
     private int imageId;
     private String keyword;
+    private String address;
     private String desc;
 
-    public KeywordData(int imageId , String keyword, String desc) {
-        this.imageId = imageId ;
+    public KeywordData(int imageId , String keyword, String address, String desc) {
+        this.imageId = imageId;
         this.keyword= keyword;
+        this.address = address;
         this.desc = desc;
     }
 
@@ -22,6 +24,13 @@ public class KeywordData implements Parcelable {
         this.keyword = keyword;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
     public String getDescription() {
         return desc;
     }
@@ -38,33 +47,4 @@ public class KeywordData implements Parcelable {
         this.imageId = imageId;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(imageId);
-        dest.writeString(keyword);
-        dest.writeString(desc);
-    }
-
-    protected KeywordData(Parcel in) {
-        imageId = in.readInt();
-        keyword = in.readString();
-        desc = in.readString();
-    }
-
-    public static final Creator<KeywordData> CREATOR = new Creator<KeywordData>() {
-        @Override
-        public KeywordData createFromParcel(Parcel in) {
-            return new KeywordData(in);
-        }
-
-        @Override
-        public KeywordData[] newArray(int size) {
-            return new KeywordData[size];
-        }
-    };
 }
