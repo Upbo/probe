@@ -189,17 +189,9 @@ public class MainActivity extends AppCompatActivity {
 
     private AddressData selected;
     public void onAddFragmentSubmit(String keyword) {
-        keywords.addKeywordData(new KeywordData(0, keyword, "desc here"));
-        /* TODO: IMPORTANT! change keyword data structure
-           int imageId
-           String keyword
-           String address
-           String desc
-           so this method should add these to recyclerview list
-           
-           if touch this item in recylcerview, go to crawled data directly
-
-        */
+        keywords.addKeywordData(new KeywordData(0, keyword, selected.getAddress(),"desc here"));
+        keywords.sort();
+        keywords.getKeywordAdapter().notifyDataSetChanged();
     }
 
     public void onAddressFragmentSubmit(AddressData data) {
