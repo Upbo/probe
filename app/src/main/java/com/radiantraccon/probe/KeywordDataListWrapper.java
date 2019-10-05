@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class KeywordDataListWrapper {
     // data to populate the RecyclerView with
@@ -40,9 +42,18 @@ public class KeywordDataListWrapper {
     public void initAdapter() {
         keywordAdapter = new KeywordAdapter(keywordDataList);
     }
-
+    // public method for add data
     public void addKeywordData(KeywordData data) {
         keywordDataList.add(data);
+    }
+    // sort arrayList
+    public void sort() {
+        Collections.sort(keywordDataList, new Comparator<KeywordData>() {
+            @Override
+            public int compare(KeywordData o1, KeywordData o2) {
+                return o1.getKeyword().compareTo(o2.getKeyword());
+            }
+        });
     }
 
     public void writeKeywordDataFile(String filename) {
@@ -57,9 +68,10 @@ public class KeywordDataListWrapper {
             jsonWriter.beginArray();
             for(KeywordData data : keywordDataList) {
                 jsonWriter.beginObject();
-                jsonWriter.name("keyword").value(data.getKeyword());
-                jsonWriter.name("description").value(data.getDescription());
                 jsonWriter.name("imageid").value(data.getImageId());
+                jsonWriter.name("keyword").value(data.getKeyword());
+                jsonWriter.name("address").value(data.getAddress());
+                jsonWriter.name("description").value(data.getDescription());
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
@@ -113,6 +125,7 @@ public class KeywordDataListWrapper {
                 KeywordData data = new KeywordData(
                         jsonObject.getInt("imageid"),
                         jsonObject.getString("keyword"),
+                        jsonObject.getString("address"),
                         jsonObject.getString("description")
                 );
 
