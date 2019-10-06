@@ -1,8 +1,11 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.data;
 
 import android.content.Context;
 import android.util.JsonWriter;
 import android.util.Log;
+
+import com.radiantraccon.probe.data.KeywordAdapter;
+import com.radiantraccon.probe.data.KeywordData;
 
 import org.json.JSONArray;
 import org.json.JSONException;

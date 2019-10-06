@@ -2,6 +2,8 @@ package com.radiantraccon.probe;
 
 import android.os.AsyncTask;
 
+import com.radiantraccon.probe.data.KeywordData;
+
 import java.util.ArrayList;
 
 public class Crawler extends AsyncTask<String, Integer, ArrayList<KeywordData>> {

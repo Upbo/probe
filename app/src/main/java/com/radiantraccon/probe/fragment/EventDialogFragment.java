@@ -1,6 +1,5 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+
+import com.radiantraccon.probe.R;
 
 public class EventDialogFragment extends DialogFragment {
     private int imageId;

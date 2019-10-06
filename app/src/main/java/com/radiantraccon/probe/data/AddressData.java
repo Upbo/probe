@@ -1,4 +1,4 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,7 +11,6 @@ public class AddressData {
     public int getImageId() {
         return imageId;
     }
-
     public void setImageId(int imageId) {
         this.imageId = imageId;
     }
@@ -19,7 +18,6 @@ public class AddressData {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -27,7 +25,6 @@ public class AddressData {
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }

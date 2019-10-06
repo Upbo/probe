@@ -1,4 +1,4 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,7 +19,6 @@ public class KeywordData {
     public String getKeyword() {
         return keyword;
     }
-
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
@@ -27,14 +26,13 @@ public class KeywordData {
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getDescription() {
         return desc;
     }
-
     public void setDescription(String desc) {
         this.desc = desc;
     }
@@ -42,7 +40,6 @@ public class KeywordData {
     public int getImageId() {
         return imageId;
     }
-
     public void setImageId(int imageId) {
         this.imageId = imageId;
     }

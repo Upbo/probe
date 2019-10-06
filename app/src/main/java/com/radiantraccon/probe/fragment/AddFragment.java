@@ -1,4 +1,4 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.fragment;
 
 
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+
+import com.radiantraccon.probe.MainActivity;
+import com.radiantraccon.probe.R;
 
 
 /**

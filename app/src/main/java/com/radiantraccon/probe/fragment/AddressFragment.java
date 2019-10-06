@@ -1,4 +1,4 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.fragment;
 
 
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.radiantraccon.probe.MainActivity;
+import com.radiantraccon.probe.R;
+import com.radiantraccon.probe.data.AddressAdapter;
+import com.radiantraccon.probe.data.AddressDataListWrapper;
 
 
 /**

@@ -17,6 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.radiantraccon.probe.data.AddressData;
+import com.radiantraccon.probe.data.KeywordAdapter;
+import com.radiantraccon.probe.data.KeywordData;
+import com.radiantraccon.probe.data.KeywordDataListWrapper;
+import com.radiantraccon.probe.fragment.AddFragment;
+import com.radiantraccon.probe.fragment.AddressFragment;
+import com.radiantraccon.probe.fragment.MainFragment;
+import com.radiantraccon.probe.fragment.OptionFragment;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {

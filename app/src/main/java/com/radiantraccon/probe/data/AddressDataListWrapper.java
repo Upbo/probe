@@ -1,4 +1,4 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.data;
 
 import java.util.ArrayList;
 
