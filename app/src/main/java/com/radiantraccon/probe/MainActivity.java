@@ -189,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    // endregion
+    //////////////////////////////////
     public void showAddressFragment() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.frameLayout, addressFragment).commit();
@@ -210,6 +211,5 @@ public class MainActivity extends AppCompatActivity {
     public void onAddressFragmentSubmit(AddressData data) {
         selected = data;
     }
-    // endregion
-    //////////////////////////////////
+
 }

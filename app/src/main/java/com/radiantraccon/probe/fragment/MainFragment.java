@@ -17,7 +17,7 @@ import com.radiantraccon.probe.R;
  */
 public class MainFragment extends Fragment {
 
-
+    // TODO: Move code of the mainActivity to this
     public MainFragment() {
         // Required empty public constructor
     }
