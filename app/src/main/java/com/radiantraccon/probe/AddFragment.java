@@ -49,7 +49,10 @@ public class AddFragment extends Fragment {
     }
 
     public void showDialog() {
-
+        EventDialogFragment.newInstance(
+                R.drawable.ic_launcher_background,
+                getString(R.string.dialog_nullInput)
+        ).show(getFragmentManager(), "eventDialog");
     }
 
 }
