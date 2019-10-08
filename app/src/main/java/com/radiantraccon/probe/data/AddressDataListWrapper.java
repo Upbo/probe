@@ -24,4 +24,6 @@ public class AddressDataListWrapper {
         addressAdapter = new AddressAdapter(addressDataList);
     }
 
+
+
 }

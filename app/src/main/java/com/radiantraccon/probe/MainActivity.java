@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     // Toolbar
     private Toolbar toolbar;
 
-    private Crawler crawler = new Crawler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
