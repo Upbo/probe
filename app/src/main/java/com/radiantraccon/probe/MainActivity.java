@@ -25,6 +25,7 @@ import com.radiantraccon.probe.fragment.AddFragment;
 import com.radiantraccon.probe.fragment.AddressFragment;
 import com.radiantraccon.probe.fragment.MainFragment;
 import com.radiantraccon.probe.fragment.OptionFragment;
+import com.radiantraccon.probe.fragment.ResultFragment;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private Fragment optionFragment = new OptionFragment();
     private Fragment addFragment = new AddFragment();
     private Fragment addressFragment = new AddressFragment();
-
+    private Fragment resultFragment = new ResultFragment();
+    // Toolbar
+    private Toolbar toolbar;
 
     private Crawler crawler = new Crawler();
     @Override
@@ -70,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         // endregion
         //////////////////////////////////
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        // toolbar
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.toolbar_title);
 
@@ -160,6 +164,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int pos) {
                 // TODO: Change View to show favorite sites that include touched keyword
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.add(R.id.frameLayout, resultFragment);
+
             }
         });
     }
