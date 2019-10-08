@@ -35,6 +35,13 @@
             android:layout_height="wrap_content"
             android:text="Description" />
 
+        <TextView
+            android:id="@+id/textView_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address" />
+
+
     </LinearLayout>
 
 </LinearLayout>
