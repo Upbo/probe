@@ -44,8 +44,8 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: Send user input to MainActivity
-                String s = keywordEditText.getText().toString();
-                ((MainActivity)getActivity()).onAddFragmentSubmit(s);
+                String str = keywordEditText.getText().toString();
+                ((MainActivity)getActivity()).onAddFragmentSubmit(str);
             }
         });
         return view;
