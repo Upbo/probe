@@ -1,28 +1,24 @@
-package com.radiantraccon.probe;
+package com.radiantraccon.probe.site;
 
 
-public class Kookbangilbo implements Site {
+public class Kookbangilbo extends Site {
     // http://kookbang.dema.mil.kr/newsWeb/BBSMSTR_000000010021/list.do
     // container >> sub_conts >> conts_left >> ul article_list >> li >>
     // sub_fig(01) >> img(img), a(Link), h4(title), p(desc), dl(time)
     //
-    @Override
-    public void getTitle() {
+    public static void getTitle() {
 
     }
 
-    @Override
-    public void getDesc() {
+    public static void getDesc() {
 
     }
 
-    @Override
-    public void getImage() {
+    public static void getImage() {
 
     }
 
-    @Override
-    public void getLink() {
+    public static void getLink() {
 
     }
 }

@@ -17,6 +17,6 @@ public class Crawler {
         get response code
     */
     public ArrayList<ResultData> crawl(AddressData data) {
-
+        Site site = data.getSite()
     }
 }
