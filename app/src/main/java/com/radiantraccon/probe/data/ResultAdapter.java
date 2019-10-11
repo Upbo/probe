@@ -83,7 +83,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
         }
 
         public void bind(ResultData data) {
-            icon.setImageResource(data.getImageId());
+            // TODO: get image from URL
+            //icon.setImageResource(data.getImageUrl());
             title.setText(data.getTitle());
             desc.setText(data.getDescription());
         }

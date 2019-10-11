@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Quasarzone {
     private static final String MAIN_PAGE = "https://quasarzone.co.kr/";
@@ -16,8 +17,8 @@ public class Quasarzone {
     private static final String NEWS_MOBILE = "bbs/board.php?bo_table=qn_mobile";
     private static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
 
-    public static ResultData getTitle(String address) {
-        ResultData ret = null;
+    public static ArrayList<ResultData> getTitle(String address) {
+        ArrayList<ResultData> ret = null;
         try {
             Document document = Jsoup.connect(address).get();
             Elements elements = document
@@ -31,6 +32,7 @@ public class Quasarzone {
                 String title = temp.text();
                 String desc = e.select("li div[class=wr-category fs11 hidden-xs]").text();
                 String link = temp.attr("href");
+                ret.add(new ResultData(imageUrl, title, desc, link));
             }
         }
         catch(IOException e) {

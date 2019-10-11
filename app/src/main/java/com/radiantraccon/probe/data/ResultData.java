@@ -1,13 +1,13 @@
 package com.radiantraccon.probe.data;
 
 public class ResultData {
-    private int imageId;
+    private String imageUrl;
     private String title;
     private String address;
     private String desc;
 
-    public ResultData(int imageId , String title, String address, String desc) {
-        this.imageId = imageId;
+    public ResultData(String imageUrl, String title, String address, String desc) {
+        this.imageUrl = imageUrl;
         this.title = title;
         this.address = address;
         this.desc = desc;
@@ -34,11 +34,11 @@ public class ResultData {
         this.desc = desc;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageUrl() {
+        return imageUrl;
     }
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 }
