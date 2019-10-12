@@ -2,6 +2,7 @@ package com.radiantraccon.probe;
 
 import com.radiantraccon.probe.data.AddressData;
 import com.radiantraccon.probe.data.ResultData;
+import com.radiantraccon.probe.site.Quasarzone;
 
 import java.util.ArrayList;
 import org.jsoup.Jsoup;
@@ -16,7 +17,13 @@ public class Crawler {
         prevent getting blacklisted (delay random seconds?)
         get response code
     */
-    public ArrayList<ResultData> crawl(AddressData data) {
-        Site site = data.getSite()
+    private int currentPage;
+
+    public Crawler() {
+        currentPage = 0;
+    }
+
+    public void crawl(String address, int page, String keyword) {
+        Quasarzone.getData(address, page, keyword);
     }
 }

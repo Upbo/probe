@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     // Toolbar
     private Toolbar toolbar;
 
+    private Crawler crawler = new Crawler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO: Load keywordDataList from internal storage
         String json = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
         ArrayList<KeywordData> list = keywords.parseKeywordData(json);
+        // TODO: pass RecyclerView in MainFragment
         keywords.setKeywordDataList(list);
         keywords.initAdapter();
         // RecyclerView
@@ -149,23 +152,25 @@ public class MainActivity extends AppCompatActivity {
     /*
      *  Initialize RecyclerView
      */
+    // TODO: Move this function to MainFragment
     private void initRecyclerView() {
-        RecyclerView recyclerView = mainFragment.getView().findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = mainFragment.getView().findViewById(R.id.recyclerView_main);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
         keywords.initAdapter();
-        KeywordAdapter adapter = keywords.getKeywordAdapter();
+        final KeywordAdapter adapter = keywords.getKeywordAdapter();
         recyclerView.setAdapter(adapter);
         // Add OnItemListener to items
         adapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 // TODO: Change View to show favorite sites that include touched keyword
+                KeywordData data = adapter.getItem(pos);
+                crawler.crawl(data.getAddress(), 1, data.getKeyword());
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.frameLayout, resultFragment);
-
             }
         });
     }

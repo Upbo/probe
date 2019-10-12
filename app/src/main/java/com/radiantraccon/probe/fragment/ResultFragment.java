@@ -4,56 +4,31 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.radiantraccon.probe.R;
+import com.radiantraccon.probe.data.ResultAdapter;
 import com.radiantraccon.probe.data.ResultDataListWrapper;
 
 public class ResultFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private ResultDataListWrapper results;
 
     public ResultFragment() {
         results = new ResultDataListWrapper();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ResultFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ResultFragment newInstance(String param1, String param2) {
-        ResultFragment fragment = new ResultFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -61,10 +36,38 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+        initRecylcerView(view);
         return view;
     }
 
-    public void initRecylcerView() {
+    public void initRecylcerView(View v) {
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView_result);
+        final LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(llm);
 
+        results.initResultAdapter();
+        ResultAdapter resultAdapter = results.getResultAdapter();
+        recyclerView.setAdapter(resultAdapter);
+
+        resultAdapter.setOnItemListener(new ResultAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                // TODO: Move to webpage of clicked item
+
+            }
+        });
+
+        RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int totalItemCount = llm.getItemCount();
+                boolean isLastItemVisible = llm.findLastCompletelyVisibleItemPosition() > totalItemCount - 1;
+                if(isLastItemVisible) {
+                    // TODO: load more page and get data
+                }
+            }
+        };
     }
 }

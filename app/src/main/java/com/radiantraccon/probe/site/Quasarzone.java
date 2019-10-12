@@ -16,11 +16,12 @@ public class Quasarzone {
     private static final String NEWS_HARDWARE = "bbs/board.php?bo_table=qn_hardware";
     private static final String NEWS_MOBILE = "bbs/board.php?bo_table=qn_mobile";
     private static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
+    private static final String PAGE = "&page=";
 
-    public static ArrayList<ResultData> getTitle(String address) {
+    public static ArrayList<ResultData> getData(String address, int page, String keyword) {
         ArrayList<ResultData> ret = null;
         try {
-            Document document = Jsoup.connect(address).get();
+            Document document = Jsoup.connect(address + PAGE + page).get();
             Elements elements = document
                     .select("ul[class=list-body]")
                     .select("li[class=list-item]");
@@ -30,6 +31,9 @@ public class Quasarzone {
                 Elements temp = e.select("li div[class=wr-subject] a");
                 String imageUrl = FAVICON;
                 String title = temp.text();
+                if(!title.contains(keyword)) {
+                    continue;
+                }
                 String desc = e.select("li div[class=wr-category fs11 hidden-xs]").text();
                 String link = temp.attr("href");
                 ret.add(new ResultData(imageUrl, title, desc, link));
@@ -40,17 +44,4 @@ public class Quasarzone {
         }
         return ret;
     }
-
-    public static void getDesc() {
-
-    }
-
-    public static void getImage() {
-
-    }
-
-    public static void getLink() {
-
-    }
-
 }
