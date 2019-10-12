@@ -2,6 +2,7 @@ package com.radiantraccon.probe;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +22,13 @@ import com.radiantraccon.probe.data.AddressData;
 import com.radiantraccon.probe.data.KeywordAdapter;
 import com.radiantraccon.probe.data.KeywordData;
 import com.radiantraccon.probe.data.KeywordDataListWrapper;
+import com.radiantraccon.probe.data.ResultData;
 import com.radiantraccon.probe.fragment.AddFragment;
 import com.radiantraccon.probe.fragment.AddressFragment;
 import com.radiantraccon.probe.fragment.MainFragment;
 import com.radiantraccon.probe.fragment.OptionFragment;
 import com.radiantraccon.probe.fragment.ResultFragment;
+import com.radiantraccon.probe.site.Quasarzone;
 
 import java.util.ArrayList;
 
@@ -223,4 +226,22 @@ public class MainActivity extends AppCompatActivity {
         selected = data;
     }
 
+
+    private class Crawler extends AsyncTask<KeywordData, Void, Void> {
+        /* TODO:
+        check http://siteaddress/robots.txt
+        default image icon http://siteaddress/favicon.ico
+        prevent getting blacklisted (delay random seconds?)
+        get response code
+    */
+        private int currentPage;
+
+        public Crawler() {
+            currentPage = 0;
+        }
+
+        public ArrayList<ResultData> crawl(String address, int page, String keyword) {
+            return Quasarzone.getData(address, page, keyword);
+        }
+    }
 }
