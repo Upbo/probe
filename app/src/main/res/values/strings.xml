@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Probe</string>
-    <string name="keywordData_filename">keyword</string>
-    <string name="addressData_filename">address</string>
+    <string name="keywordData_filename">keyword_data.json</string>
+    <string name="addressData_filename">address_data.json</string>
 
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>

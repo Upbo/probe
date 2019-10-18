@@ -1,6 +1,7 @@
 package com.radiantraccon.probe.data;
 
 import android.content.Context;
+import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,8 +61,8 @@ public class KeywordDataListWrapper {
         });
     }
 
-    public void writeKeywordDataFile(String filename) {
-        File file = new File(filename);
+    public void writeKeywordDataFile(String filename, Context context) {
+        File file = new File(context.getFilesDir(), filename);
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
 
@@ -78,26 +80,39 @@ public class KeywordDataListWrapper {
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
+            jsonWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
         } catch(IOException e) {
-
+            Log.e("File write", "Can't write FIle "+e.toString());
         }
     }
 
-    public String readKeywordDataFile(String filename, Context context) {
-        String ret = null;
-        InputStream inputStream = null;
+    public ArrayList<KeywordData> readKeywordDataFile(String filename, Context context) {
+        ArrayList<KeywordData> ret = new ArrayList<>();
+        File file = new File(context.getFilesDir(), filename);
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+
         try {
-            inputStream = context.openFileInput(filename);
-            if(inputStream != null) {
-                InputStreamReader streamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(streamReader);
-                StringBuilder stringBuilder = new StringBuilder();
-                String read = null;
-                while((read = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(read);
-                }
-                ret = stringBuilder.toString();
+            if(!file.exists()) {
+                writeKeywordDataFile(filename, context);
+                Log.e("File read", "File not exists");
             }
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            JsonReader jsonReader = new JsonReader(bufferedReader);
+            jsonReader.beginArray();
+            while(jsonReader.hasNext()) {
+                int imageId = jsonReader.nextInt();
+                String keyword = jsonReader.nextString();
+                String address = jsonReader.nextString();
+                String desc = jsonReader.nextString();
+                KeywordData data = new KeywordData(imageId, keyword, address, desc);
+                ret.add(data);
+            }
+            jsonReader.endArray();
+            jsonReader.close();
 
         } catch(FileNotFoundException e) {
             Log.e("File read", "File not found: "+e.toString());
@@ -106,11 +121,13 @@ public class KeywordDataListWrapper {
         }
         finally {
             try {
-                inputStream.close();
+                bufferedReader.close();
+                fileReader.close();
             } catch(IOException e) {
                 Log.e("File read", "Can't close inputstream: "+e.toString());
             }
         }
+        Log.e("result",ret.toString());
         return ret;
     }
 

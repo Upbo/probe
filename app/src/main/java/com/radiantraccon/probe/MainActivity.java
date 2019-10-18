@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     // ex:) class Data;
     //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
-    public KeywordDataListWrapper keywords;
+    public KeywordDataListWrapper keywords = new KeywordDataListWrapper();
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
@@ -108,16 +108,18 @@ public class MainActivity extends AppCompatActivity {
         });
         // endregion
         //////////////////////////////////
-
         // TODO: Load keywordDataList from internal storage
-        String json = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
-        ArrayList<KeywordData> list = keywords.parseKeywordData(json);
+        ArrayList<KeywordData> list  = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
+        /*
         // TODO: pass RecyclerView in MainFragment
         keywords.setKeywordDataList(list);
         keywords.initAdapter();
         // RecyclerView
 
         initRecyclerView();
+
+        */
+
     }
 
 
@@ -242,6 +244,36 @@ public class MainActivity extends AppCompatActivity {
 
         public ArrayList<ResultData> crawl(String address, int page, String keyword) {
             return Quasarzone.getData(address, page, keyword);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected Void doInBackground(KeywordData... keywordData) {
+            return null;
         }
     }
 }
