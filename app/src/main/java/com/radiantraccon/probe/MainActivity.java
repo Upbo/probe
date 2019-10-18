@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.INTERNET
     };
     // TODO: data classes could be extends abstract class
-    // ex:) class Data;
-    //      class KeywordData extends Data ... etc
-    // Data ArrayList of RecyclerView
-    public KeywordDataListWrapper keywords = new KeywordDataListWrapper();
     // FragmentManager for changing fragments
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         // region Fragments
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // replace or add which is better?
-        transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
+        transaction.replace(R.id.frameLayout, mainFragment).commit();
         // endregion
         //////////////////////////////////
 
@@ -108,17 +105,8 @@ public class MainActivity extends AppCompatActivity {
         });
         // endregion
         //////////////////////////////////
-        // TODO: Load keywordDataList from internal storage
-        ArrayList<KeywordData> list  = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), this);
-        /*
-        // TODO: pass RecyclerView in MainFragment
-        keywords.setKeywordDataList(list);
-        keywords.initAdapter();
-        // RecyclerView
-
-        initRecyclerView();
-
-        */
+        // TODO: findFragmentById returns null. FIX!
+        ((MainFragment)fragmentManager.findFragmentById(R.id.frameLayout)).initRecyclerView();
 
     }
 
@@ -152,33 +140,6 @@ public class MainActivity extends AppCompatActivity {
     // endregion
     //////////////////////////////////
 
-
-
-    /*
-     *  Initialize RecyclerView
-     */
-    // TODO: Move this function to MainFragment
-    private void initRecyclerView() {
-        RecyclerView recyclerView = mainFragment.getView().findViewById(R.id.recyclerView_main);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(llm);
-
-        keywords.initAdapter();
-        final KeywordAdapter adapter = keywords.getKeywordAdapter();
-        recyclerView.setAdapter(adapter);
-        // Add OnItemListener to items
-        adapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-                // TODO: Change View to show favorite sites that include touched keyword
-                KeywordData data = adapter.getItem(pos);
-                crawler.crawl(data.getAddress(), 1, data.getKeyword());
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.frameLayout, resultFragment);
-            }
-        });
-    }
 
 
     //////////////////////////////////
@@ -218,10 +179,14 @@ public class MainActivity extends AppCompatActivity {
             // TODO: DEBUG. R.id.frameLayout? R.id.fragment_add?
             ((AddFragment)fragmentManager.findFragmentById(R.id.frameLayout)).showDialog();
         }
-        keywords.addKeywordData(new KeywordData(0, keyword, selected.getAddress(),"desc here"));
-        keywords.sort();
-        keywords.getKeywordAdapter().notifyDataSetChanged();
-        selected = null;
+        else {
+            /*
+            keywords.addKeywordData(new KeywordData(0, keyword, selected.getAddress(), "desc here"));
+            keywords.sort();
+            keywords.getKeywordAdapter().notifyDataSetChanged();
+            */
+            selected = null;
+        }
     }
 
     public void onAddressFragmentSubmit(AddressData data) {
