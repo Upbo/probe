@@ -4,6 +4,7 @@ package com.radiantraccon.probe.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.radiantraccon.probe.MainActivity;
 import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.data.AddressAdapter;
+import com.radiantraccon.probe.data.AddressData;
 import com.radiantraccon.probe.data.AddressDataListWrapper;
 
 
@@ -33,7 +35,7 @@ public class AddressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_address, container, false);
+        final View view = inflater.inflate(R.layout.fragment_address, container, false);
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView_address);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -45,7 +47,12 @@ public class AddressFragment extends Fragment {
         adapter.setOnItemListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                ((MainActivity)getActivity()).onAddressFragmentSubmit(adapter.getItem(pos));
+                // TODO: PASS PARAM
+                AddressData data = adapter.getItem(pos);
+                Bundle bundle = new Bundle();
+                bundle.putString("address", data.getAddress());
+                bundle.putString("title", data.getTitle());
+                Navigation.findNavController(view).navigate(R.id.action_addressFragment_to_addFragment, bundle);
             }
         });
 

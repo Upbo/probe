@@ -3,11 +3,15 @@ package com.radiantraccon.probe.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +22,14 @@ import com.radiantraccon.probe.data.KeywordData;
 import com.radiantraccon.probe.data.KeywordDataListWrapper;
 
 import java.util.ArrayList;
+import java.util.NavigableMap;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
+    private NavController navController;
 
     // ex:) class Data;
     //      class KeywordData extends Data ... etc
@@ -38,10 +44,15 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            Log.e("Main", bundle.getString("keyword"));
+        }
+        // Inflate the layout for this fragmen
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         // TODO: Load keywordDataList from internal storage
         ArrayList<KeywordData> list  = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), getContext());
+        Log.e("MainFragment", "RecyclerView items: " + list.toString());
         keywords.setKeywordDataList(list);
         // RecyclerView
         return view;
@@ -71,6 +82,12 @@ public class MainFragment extends Fragment {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.frameLayout, resultFragment);
                 */
+                keywords.writeKeywordDataFile(getString(R.string.keywordData_filename), getContext());
+                Bundle bundle = new Bundle();
+                KeywordData data = adapter.getItem(pos);
+                bundle.putString("keyword", data.getKeyword());
+                bundle.putString("address", data.getAddress());
+                navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
             }
         });
     }

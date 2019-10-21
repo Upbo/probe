@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.radiantraccon.probe.data.AddressData;
-import com.radiantraccon.probe.data.KeywordAdapter;
 import com.radiantraccon.probe.data.KeywordData;
-import com.radiantraccon.probe.data.KeywordDataListWrapper;
 import com.radiantraccon.probe.data.ResultData;
 import com.radiantraccon.probe.fragment.AddFragment;
 import com.radiantraccon.probe.fragment.AddressFragment;
@@ -42,16 +39,17 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.INTERNET
     };
     // TODO: data classes could be extends abstract class
-    // FragmentManager for changing fragments
-    private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment mainFragment = new MainFragment();
     private Fragment optionFragment = new OptionFragment();
     private Fragment addFragment = new AddFragment();
     private Fragment addressFragment = new AddressFragment();
     private Fragment resultFragment = new ResultFragment();
     // Toolbar
-    private Toolbar toolbar;
+    private Toolbar mainToolbar;
+    private Toolbar noButtonToolbar;
 
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
     private Crawler crawler = new Crawler();
 
     @Override
@@ -64,39 +62,40 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(permissionList, 0);
         }
         //////////////////////////////////
+        navController = Navigation.findNavController(this,R.id.frameLayout);
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 
+        mainToolbar = findViewById(R.id.toolbar);
+        mainToolbar.inflateMenu(R.menu.toolbar_main);
 
-        //////////////////////////////////
-        // region Fragments
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        // replace or add which is better?
-        transaction.replace(R.id.frameLayout, mainFragment).commit();
-        // endregion
-        //////////////////////////////////
+        noButtonToolbar = findViewById(R.id.toolbar);
+        noButtonToolbar.inflateMenu(R.menu.toolbar_nobutton);
 
-        // toolbar
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.toolbar_title);
-
+        NavigationUI.setupWithNavController(mainToolbar, navController);
+        mainToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                mainToolbar.setVisibility(View.GONE);
+                noButtonToolbar.setVisibility(View.VISIBLE);
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            }
+        });
         //////////////////////////////////
         //region BottomNavigationView
         BottomNavigationView bnv = findViewById(R.id.bottomNavView);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     // TODO: Debug first! then change replace function to add or something else...
                     case R.id.navigation_menu1: {
-                        transaction.replace(R.id.frameLayout, mainFragment).commitAllowingStateLoss();
+                        //
                         break;
                     }
                     case R.id.navigation_menu2: {
                         break;
                     }
                     case R.id.navigation_menu3: {
-                        transaction.replace(R.id.frameLayout, optionFragment).commitAllowingStateLoss();
                         break;
                     }
                 }
@@ -106,40 +105,20 @@ public class MainActivity extends AppCompatActivity {
         // endregion
         //////////////////////////////////
         // TODO: findFragmentById returns null. FIX!
-        ((MainFragment)fragmentManager.findFragmentById(R.id.frameLayout)).initRecyclerView();
 
     }
 
-
+    /*
     //////////////////////////////////
     // region Toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toolbar_add: {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.frameLayout, addFragment).commit();
-                // TODO: Get user input from addFragment and add this to keywordDataList
-                // TODO: Write keywordDataList to internal storage
-
-                break;
-            }
-            case R.id.toolbar_search: {
-                // TODO: Search item in RecyclerView
-                break;
-            }
-        }
+        getMenuInflater().inflate(R.menu.toolbar_main, menu);
         return true;
     }
     // endregion
     //////////////////////////////////
-
+    */
 
 
     //////////////////////////////////
@@ -168,30 +147,6 @@ public class MainActivity extends AppCompatActivity {
     }
     // endregion
     //////////////////////////////////
-    public void showAddressFragment() {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.frameLayout, addressFragment).commit();
-    }
-
-    private AddressData selected;
-    public void onAddFragmentSubmit(String keyword) {
-        if(selected == null || keyword.equals("")) {
-            // TODO: DEBUG. R.id.frameLayout? R.id.fragment_add?
-            ((AddFragment)fragmentManager.findFragmentById(R.id.frameLayout)).showDialog();
-        }
-        else {
-            /*
-            keywords.addKeywordData(new KeywordData(0, keyword, selected.getAddress(), "desc here"));
-            keywords.sort();
-            keywords.getKeywordAdapter().notifyDataSetChanged();
-            */
-            selected = null;
-        }
-    }
-
-    public void onAddressFragmentSubmit(AddressData data) {
-        selected = data;
-    }
 
 
     private class Crawler extends AsyncTask<KeywordData, Void, Void> {
