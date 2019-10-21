@@ -2,7 +2,7 @@
     <string name="app_name">Probe</string>
     <string name="keywordData_filename">keyword_data.json</string>
     <string name="addressData_filename">address_data.json</string>
-    <string name="quasarzone_game">Quasarzone game board</string>
+    <string name="quasarzone_game">Quasarzone game news</string>
 
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>

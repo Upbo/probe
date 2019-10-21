@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Quasarzone {
-    private static final String MAIN_PAGE = "https://quasarzone.co.kr/";
-    private static final String NEWS_GAME = "bbs/board.php?bo_table=qn_game";
-    private static final String NEWS_HARDWARE = "bbs/board.php?bo_table=qn_hardware";
-    private static final String NEWS_MOBILE = "bbs/board.php?bo_table=qn_mobile";
-    private static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
-    private static final String PAGE = "&page=";
+    public static final String MAIN_PAGE = "https://quasarzone.co.kr/";
+    public static final String NEWS_GAME = "bbs/board.php?bo_table=qn_game";
+    public static final String NEWS_HARDWARE = "bbs/board.php?bo_table=qn_hardware";
+    public static final String NEWS_MOBILE = "bbs/board.php?bo_table=qn_mobile";
+    public static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
+    public static final String PAGE = "&page=";
 
     public static ArrayList<ResultData> getData(String address, int page, String keyword) {
         ArrayList<ResultData> ret = null;

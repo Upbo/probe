@@ -6,6 +6,7 @@ import android.util.JsonWriter;
 import android.util.Log;
 
 
+import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.site.Quasarzone;
 
 import java.io.BufferedReader;
@@ -109,7 +110,7 @@ public class AddressDataListWrapper {
     }
 
     private void writeFirstDataFile(String filename, Context context) {
-        AddressData QUASARZONE_GAME = new AddressData(R.drawable.ic_launcher_background, getString(R.string.quasarzone_game), Quasarzone.MAIN_PAGE);
+        AddressData QUASARZONE_GAME = new AddressData(R.drawable.quasarzone, getString(R.string.quasarzone_game), Quasarzone.MAIN_PAGE+Quasarzone.NEWS_GAME);
         addressDataList.add(QUASARZONE_GAME);
     }
 }

@@ -110,6 +110,7 @@ public class KeywordDataListWrapper {
                 String desc = jsonReader.nextString();
                 KeywordData data = new KeywordData(imageId, keyword, address, desc);
                 ret.add(data);
+                Log.e("File read", data.toString() + "readed ");
             }
             jsonReader.endArray();
             jsonReader.close();
