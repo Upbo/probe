@@ -6,7 +6,6 @@ import android.util.JsonWriter;
 import android.util.Log;
 
 
-import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.site.Quasarzone;
 
 import java.io.BufferedReader;
