@@ -23,6 +23,13 @@
             android:ems="10"
             android:inputType="textPersonName"/>
 
+        <EditText
+            android:id="@+id/editText_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
         <Button
             android:id="@+id/button_address"
             android:layout_width="match_parent"
