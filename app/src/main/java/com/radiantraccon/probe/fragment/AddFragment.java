@@ -15,13 +15,16 @@ import androidx.navigation.Navigation;
 
 import com.radiantraccon.probe.MainActivity;
 import com.radiantraccon.probe.R;
+import com.radiantraccon.probe.data.AddressData;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddFragment extends Fragment {
-
+    private int imageId;
+    private String title;
+    private String address;
     public AddFragment() {
         // Required empty public constructor
     }
@@ -29,10 +32,7 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Bundle args = getArguments();
-        if(args != null) {
-            Log.e("add",args.getString("address"));
-        }
+
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add, container, false);
 
@@ -41,6 +41,14 @@ public class AddFragment extends Fragment {
         final EditText keywordEditText = view.findViewById(R.id.editText_keyword);
         Button submitButton = view.findViewById(R.id.button_submit);
         Button addressButton = view.findViewById(R.id.button_address);
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            imageId = bundle.getInt("imageId");
+            title = bundle.getString("title");
+            address = bundle.getString("address");
+            addressButton.setText(title);
+        }
         addressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +62,9 @@ public class AddFragment extends Fragment {
                 String str = keywordEditText.getText().toString();
                 Bundle bundle = new Bundle();
                 if(!str.equals("")) {
-                    bundle.putString("keyword", str);
+                    bundle.putInt("imageId", imageId);
+                    bundle.putString("title",title);
+                    bundle.putString("address", address);
                     Navigation.findNavController(view).navigate(R.id.action_addFragment_to_mainFragment, bundle);
                 }
                 else {

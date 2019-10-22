@@ -36,22 +36,23 @@ public class AddressFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_address, container, false);
-
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView_address);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        addresses.readAddressDataFile(getString(R.string.addressData_filename), getContext());
 
         addresses.initAdapter();
         final AddressAdapter adapter = addresses.getAddressAdapter();
+        // TODO: BUG item shows twice
         recyclerView.setAdapter(adapter);
         adapter.setOnItemListener(new AddressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                // TODO: PASS PARAM
                 AddressData data = adapter.getItem(pos);
                 Bundle bundle = new Bundle();
-                bundle.putString("address", data.getAddress());
+                bundle.putInt("imageId", data.getImageId());
                 bundle.putString("title", data.getTitle());
+                bundle.putString("address", data.getAddress());
                 Navigation.findNavController(view).navigate(R.id.action_addressFragment_to_addFragment, bundle);
             }
         });
