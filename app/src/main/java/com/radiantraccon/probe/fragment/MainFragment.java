@@ -6,13 +6,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,9 +22,6 @@ import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.data.KeywordAdapter;
 import com.radiantraccon.probe.data.KeywordData;
 import com.radiantraccon.probe.data.KeywordDataListWrapper;
-
-import java.util.ArrayList;
-import java.util.NavigableMap;
 
 
 /**
@@ -88,7 +82,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(View v, int pos) {
                 KeywordData data = adapter.getItem(pos);
-                ((MainActivity)getActivity()).crawl(data.getAddress(), data.getKeyword(), "1");
+                ((MainActivity)getActivity()).crawl(data.getAddress(), data.getKeyword(), "1", "true");
             }
         });
         return view;

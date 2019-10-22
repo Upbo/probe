@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_menu1: {
                         // TODO: navigate each fragment
+
                         break;
                     }
                     case R.id.navigation_menu2: {
@@ -136,10 +138,11 @@ public class MainActivity extends AppCompatActivity {
     // endregion
     //////////////////////////////////
 
-
-    public void crawl(String address, String keyword, String page) {
+    public void crawl(String address, String keyword, String page, String nav) {
+        // if nav == true, navigate mainFragment to resultFragment
+        // if nav == false, don't
         crawler = new Crawler();
-        crawler.execute(address, keyword, page);
+        crawler.execute(address, keyword, page, nav);
     }
 
     private class Crawler extends AsyncTask<String, Void, ArrayList<ResultData>> {
@@ -155,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         private String address;
         private String keyword;
         private String page;
+        private String nav;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -172,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             address = strings[0];
             keyword = strings[1];
             page = strings[2];
-
+            nav = strings[3];
             int p = Integer.parseInt(page);
             switch(address) {
                 case Quasarzone.NEWS_GAME:
@@ -191,7 +195,12 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("keyword", keyword);
             bundle.putString("address", address);
             bundle.putString("page", page);
-            navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
+            if(nav.equals("true")) {
+                navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
+            } else {
+                navController.navigate(R.id.action_resultFragment_self, bundle);
+
+            }
         }
 
         @Override
