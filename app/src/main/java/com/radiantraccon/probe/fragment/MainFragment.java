@@ -34,13 +34,15 @@ import java.util.NavigableMap;
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
-    private NavController navController;
+    private int paramImageId;
+    private String paramKeyword;
+    private String paramAddress;
+    private String paramDesc;
 
     // ex:) class Data;
     //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
     public KeywordDataListWrapper keywords = new KeywordDataListWrapper();
-    // TODO: Move code of the mainActivity to this
     public MainFragment() {
         // Required empty public constructor
     }
@@ -48,30 +50,47 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        keywords.readKeywordDataFile(getString(R.string.keywordData_filename), getContext());
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
         Bundle bundle = getArguments();
         if(bundle != null) {
-            KeywordData data = new KeywordData(
-                bundle.getInt("imageId"),
-                bundle.getString("keyword"),
-                bundle.getString("title"),
-                ""
-            );
-
-            (MainActivity)getActivity().crawl(data);
+            paramImageId = bundle.getInt("imageId");
+            paramKeyword = bundle.getString("keyword");
+            paramAddress = bundle.getString("address");
+            paramDesc = bundle.getString("desc");
+            bundle.clear();
+            if(paramKeyword != null) {
+                // 데이터 안건드리고 백버튼만 눌러 왔다갔다해도 번들 받아서 읽는 버그
+                // 때문에 bundle.clear를 했는데 이렇게 하니 null 데이터가 쓰여짐
+                // 그래서 null 검사하고 쓰기
+                KeywordData data = new KeywordData(paramImageId, paramKeyword, paramAddress, paramDesc);
+                keywords.addKeywordData(data);
+                keywords.appendKeywordDataFile(getString(R.string.keywordData_filename), getContext());
+            }
         }
-        // Inflate the layout for this fragmen
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        // TODO: Load keywordDataList from internal storage
-        ArrayList<KeywordData> list  = keywords.readKeywordDataFile(getString(R.string.keywordData_filename), getContext());
-        Log.e("MainFragment", "RecyclerView items: " + list.toString());
-        keywords.setKeywordDataList(list);
         // RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_main);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(llm);
+        keywords.initAdapter();
+
+        final KeywordAdapter adapter = keywords.getKeywordAdapter();
+        recyclerView.setAdapter(adapter);
+        // Add OnItemListener to items
+        adapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                KeywordData data = adapter.getItem(pos);
+                ((MainActivity)getActivity()).crawl(data.getAddress(), data.getKeyword(), "1");
+            }
+        });
         return view;
     }
 
@@ -93,39 +112,4 @@ public class MainFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*
-     *  Initialize RecyclerView
-     */
-    // TODO: Move this function to MainFragment
-    public  void initRecyclerView() {
-        RecyclerView recyclerView = getView().findViewById(R.id.recyclerView_main);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(llm);
-
-        keywords.initAdapter();
-        final KeywordAdapter adapter = keywords.getKeywordAdapter();
-        recyclerView.setAdapter(adapter);
-        // Add OnItemListener to items
-        adapter.setOnItemListener(new KeywordAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-                /*
-                // TODO: Change View to show favorite sites that include touched keyword
-                KeywordData data = adapter.getItem(pos);
-                crawler.crawl(data.getAddress(), 1, data.getKeyword());
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.frameLayout, resultFragment);
-                */
-                keywords.writeKeywordDataFile(getString(R.string.keywordData_filename), getContext());
-                Bundle bundle = new Bundle();
-                KeywordData data = adapter.getItem(pos);
-                bundle.putString("keyword", data.getKeyword());
-                bundle.putString("address", data.getAddress());
-                navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
-            }
-        });
-    }
-
 }
