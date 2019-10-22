@@ -152,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
         private ProgressDialog progressDialog;
         private ArrayList<ResultData> results;
+        private String address;
+        private String keyword;
+        private String page;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -166,13 +169,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected ArrayList<ResultData> doInBackground(String... strings) {
             Log.e("AsyncTask" , strings[0] + " "+ strings[1]+ " "+ strings[2]);
-            String address = strings[0];
-            String keyword = strings[1];
-            int page = Integer.parseInt(strings[2]);
+            address = strings[0];
+            keyword = strings[1];
+            page = strings[2];
 
+            int p = Integer.parseInt(page);
             switch(address) {
                 case Quasarzone.NEWS_GAME:
-                    results = Quasarzone.getData(address, keyword, page);
+                    results = Quasarzone.getData(address, keyword, p);
             }
             return results;
         }
@@ -180,15 +184,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<ResultData> resultData) {
             super.onPostExecute(resultData);
-
-            for(ResultData data : results) {
-                Log.e("AsyncTasK", data.getTitle());
-                Log.e("AsyncTasK", data.getAddress());
-                Log.e("AsyncTasK", data.getDescription());
-                Log.e("AsyncTasK", data.getImageUrl());
-            }
+            //TODO: temprary dialog
             progressDialog.dismiss();
             Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("results", results);
+            bundle.putString("keyword", keyword);
+            bundle.putString("address", address);
+            bundle.putString("page", page);
             navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
         }
 
