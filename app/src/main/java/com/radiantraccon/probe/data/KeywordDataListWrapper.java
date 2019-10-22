@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,7 +32,7 @@ public class KeywordDataListWrapper {
     private KeywordAdapter keywordAdapter;
     // constructor
     public KeywordDataListWrapper() {
-
+        keywordDataList = new ArrayList<>();
     }
     // getter and setter for list
     public ArrayList<KeywordData> getKeywordDataList() {
@@ -67,6 +68,10 @@ public class KeywordDataListWrapper {
         BufferedWriter bufferedWriter = null;
 
         try{
+            if(file.exists()) {
+                readKeywordDataFile(filename,context);
+                Log.e("KeywordData", "File exists. read file first");
+            }
             fileWriter = new FileWriter(file);
             bufferedWriter = new BufferedWriter(fileWriter);
             JsonWriter jsonWriter = new JsonWriter(bufferedWriter);
@@ -88,47 +93,84 @@ public class KeywordDataListWrapper {
         }
     }
 
-    public ArrayList<KeywordData> readKeywordDataFile(String filename, Context context) {
-        ArrayList<KeywordData> ret = new ArrayList<>();
+    public void appendKeywordDataFile(String filename, Context context) {
+        File file = new File(context.getFilesDir(), filename);
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+
+        try{
+            fileWriter = new FileWriter(file);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            JsonWriter jsonWriter = new JsonWriter(bufferedWriter);
+            jsonWriter.beginArray();
+            for(KeywordData data : keywordDataList) {
+                jsonWriter.beginObject();
+                jsonWriter.name("imageid").value(data.getImageId());
+                jsonWriter.name("keyword").value(data.getKeyword());
+                jsonWriter.name("address").value(data.getAddress());
+                jsonWriter.name("description").value(data.getDescription());
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+            jsonWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
+            Log.e("File write", "File write success");
+        } catch(IOException e) {
+            Log.e("File write", "Can't write FIle "+e.toString());
+        }
+    }
+
+    public void readKeywordDataFile(String filename, Context context) {
         File file = new File(context.getFilesDir(), filename);
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
 
         try {
-            if(file.exists()) {
-                writeKeywordDataFile(filename, context);
+            if(!file.exists()) {
                 Log.e("File read", "File not exists");
             }
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
             JsonReader jsonReader = new JsonReader(bufferedReader);
+
             jsonReader.beginArray();
             while(jsonReader.hasNext()) {
-                int imageId = jsonReader.nextInt();
-                String keyword = jsonReader.nextString();
-                String address = jsonReader.nextString();
-                String desc = jsonReader.nextString();
+                int imageId = -1;
+                String keyword = "";
+                String address = "";
+                String desc = "";
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String name = jsonReader.nextName();
+                    if (name.equals("imageid")) {
+                        imageId = jsonReader.nextInt();
+                    } else if (name.equals("keyword")) {
+                        keyword = jsonReader.nextString();
+                    } else if (name.equals("address")) {
+                        address = jsonReader.nextString();
+                    } else if (name.equals("desc")) {
+                        desc = jsonReader.nextString();
+                    } else {
+                        jsonReader.skipValue();
+                    }
+                }
                 KeywordData data = new KeywordData(imageId, keyword, address, desc);
-                ret.add(data);
+                jsonReader.endObject();
+                keywordDataList.add(data);
                 Log.e("File read", data.toString() + "readed ");
             }
             jsonReader.endArray();
             jsonReader.close();
             bufferedReader.close();
             fileReader.close();
-
         } catch(FileNotFoundException e) {
             Log.e("File read", "File not found: "+e.toString());
         } catch(IOException e) {
             Log.e("File read", "Can't read file: "+e.toString());
         }
-        Log.e("result",ret.toString());
-        return ret;
     }
 
-    private void writeFirstDataFile(String filename, Context context) {
-
-    }
 
     public ArrayList<KeywordData> parseKeywordData(String json) {
         ArrayList<KeywordData> list;

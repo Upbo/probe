@@ -58,13 +58,14 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
         ImageView icon;
         TextView keyword;
         TextView desc;
+        TextView address;
         public KeywordViewHolder(View itemView) {
             super(itemView);
 
             icon = itemView.findViewById(R.id.imageView_icon);
             keyword = itemView.findViewById(R.id.textView_keyword);
             desc = itemView.findViewById(R.id.textView_desc);
-
+            address = itemView.findViewById(R.id.textView_address);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,6 +83,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
             icon.setImageResource(data.getImageId());
             keyword.setText(data.getKeyword());
             desc.setText(data.getDescription());
+            address.setText(data.getAddress());
         }
     }
 }
