@@ -1,8 +1,5 @@
 package com.radiantraccon.probe.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 public class KeywordData {
     private int imageId;
     private String keyword;

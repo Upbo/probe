@@ -1,7 +1,6 @@
 package com.radiantraccon.probe.data;
 
 import android.content.Context;
-import android.location.Address;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;

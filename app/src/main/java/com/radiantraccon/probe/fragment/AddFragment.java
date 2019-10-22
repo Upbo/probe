@@ -2,7 +2,6 @@ package com.radiantraccon.probe.fragment;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.radiantraccon.probe.MainActivity;
 import com.radiantraccon.probe.R;
-import com.radiantraccon.probe.data.AddressData;
 
 
 /**
@@ -25,6 +21,7 @@ public class AddFragment extends Fragment {
     private int imageId;
     private String title;
     private String address;
+
     public AddFragment() {
         // Required empty public constructor
     }
@@ -48,6 +45,7 @@ public class AddFragment extends Fragment {
             address = bundle.getString("address");
             addressButton.setText(title);
         }
+
         addressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,4 +73,5 @@ public class AddFragment extends Fragment {
         });
         return view;
     }
+
 }

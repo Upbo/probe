@@ -1,5 +1,7 @@
 package com.radiantraccon.probe.site;
 
+import android.util.Log;
+
 import com.radiantraccon.probe.data.ResultData;
 
 import org.jsoup.Jsoup;
@@ -12,14 +14,14 @@ import java.util.ArrayList;
 
 public class Quasarzone {
     public static final String MAIN_PAGE = "https://quasarzone.co.kr/";
-    public static final String NEWS_GAME = "bbs/board.php?bo_table=qn_game";
-    public static final String NEWS_HARDWARE = "bbs/board.php?bo_table=qn_hardware";
-    public static final String NEWS_MOBILE = "bbs/board.php?bo_table=qn_mobile";
+    public static final String NEWS_GAME = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_game";
+    public static final String NEWS_HARDWARE = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_hardware";
+    public static final String NEWS_MOBILE = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_mobile";
     public static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
     public static final String PAGE = "&page=";
 
-    public static ArrayList<ResultData> getData(String address, int page, String keyword) {
-        ArrayList<ResultData> ret = null;
+    public static ArrayList<ResultData> getData(String address, String keyword, int page) {
+        ArrayList<ResultData> ret = new ArrayList<>();
         try {
             Document document = Jsoup.connect(address + PAGE + page).get();
             Elements elements = document
@@ -31,12 +33,16 @@ public class Quasarzone {
                 Elements temp = e.select("li div[class=wr-subject] a");
                 String imageUrl = FAVICON;
                 String title = temp.text();
+                /*
                 if(!title.contains(keyword)) {
                     continue;
                 }
+
+                 */
                 String desc = e.select("li div[class=wr-category fs11 hidden-xs]").text();
                 String link = temp.attr("href");
-                ret.add(new ResultData(imageUrl, title, desc, link));
+                Log.e("Result Data", link);
+                ret.add(new ResultData(imageUrl, title, link, desc));
             }
         }
         catch(IOException e) {
