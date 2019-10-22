@@ -20,7 +20,11 @@
         android:id="@+id/resultFragment"
         android:name="com.radiantraccon.probe.fragment.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.radiantraccon.probe.fragment.AddFragment"
@@ -54,4 +58,9 @@
             android:id="@+id/action_addressFragment_to_addFragment"
             app:destination="@id/addFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.radiantraccon.probe.fragment.WebFragment"
+        android:label="fragment_web"
+        tools:layout="@layout/fragment_web" />
 </navigation>
