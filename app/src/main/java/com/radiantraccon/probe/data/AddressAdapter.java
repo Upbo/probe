@@ -1,5 +1,6 @@
 package com.radiantraccon.probe.data;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
             icon = itemView.findViewById(R.id.imageView_icon);
             title = itemView.findViewById(R.id.textView_title);
-            address = itemView.findViewById(R.id.textView_desc);
+            address = itemView.findViewById(R.id.textView_address);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

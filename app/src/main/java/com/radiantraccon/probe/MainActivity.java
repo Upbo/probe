@@ -1,14 +1,18 @@
 package com.radiantraccon.probe;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -64,22 +68,10 @@ public class MainActivity extends AppCompatActivity {
         //////////////////////////////////
         navController = Navigation.findNavController(this,R.id.frameLayout);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-
         mainToolbar = findViewById(R.id.toolbar);
-        mainToolbar.inflateMenu(R.menu.toolbar_main);
-
-        noButtonToolbar = findViewById(R.id.toolbar);
-        noButtonToolbar.inflateMenu(R.menu.toolbar_nobutton);
-
+        setSupportActionBar(mainToolbar);
         NavigationUI.setupWithNavController(mainToolbar, navController);
-        mainToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                mainToolbar.setVisibility(View.GONE);
-                noButtonToolbar.setVisibility(View.VISIBLE);
-                return NavigationUI.onNavDestinationSelected(item, navController);
-            }
-        });
+
         //////////////////////////////////
         //region BottomNavigationView
         BottomNavigationView bnv = findViewById(R.id.bottomNavView);
@@ -103,23 +95,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // endregion
-        //////////////////////////////////
-        // TODO: findFragmentById returns null. FIX!
-
+        /////////////////////////////////
     }
 
-    /*
-    //////////////////////////////////
-    // region Toolbar
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_main, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.addFragment:
+                return false;
+        }
+        return false;
     }
-    // endregion
-    //////////////////////////////////
-    */
-
 
     //////////////////////////////////
     // region Permissions
@@ -149,13 +137,17 @@ public class MainActivity extends AppCompatActivity {
     //////////////////////////////////
 
 
-    private class Crawler extends AsyncTask<KeywordData, Void, Void> {
+    public void crawl(KeywordData data) {
+        new Crawler().execute(data);
+    }
+
+    private class Crawler extends AsyncTask<KeywordData, Void, ArrayList<ResultData>> {
         /* TODO:
         check http://siteaddress/robots.txt
         default image icon http://siteaddress/favicon.ico
         prevent getting blacklisted (delay random seconds?)
         get response code
-    */
+        */
         private int currentPage;
 
         public Crawler() {
@@ -169,11 +161,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            // TODO: Wait dialoag?
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected ArrayList<ResultData> doInBackground(KeywordData... keywordData) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<ResultData> resultData) {
+            super.onPostExecute(resultData);
         }
 
         @Override
@@ -182,18 +180,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onCancelled(Void aVoid) {
-            super.onCancelled(aVoid);
+        protected void onCancelled(ArrayList<ResultData> resultData) {
+            super.onCancelled(resultData);
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
-        }
-
-        @Override
-        protected Void doInBackground(KeywordData... keywordData) {
-            return null;
         }
     }
 }

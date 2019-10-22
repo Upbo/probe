@@ -1,11 +1,12 @@
 package com.radiantraccon.probe.data;
 
 import android.content.Context;
+import android.location.Address;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
-
+import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.site.Quasarzone;
 
 import java.io.BufferedReader;
@@ -23,7 +24,9 @@ public class AddressDataListWrapper {
     private AddressAdapter addressAdapter;
 
     // constructor
-    public AddressDataListWrapper() { }
+    public AddressDataListWrapper() {
+        addressDataList = new ArrayList<>();
+    }
     // getter and setter for list
     public ArrayList<AddressData> getAddressDataList() {
         return addressDataList;
@@ -52,8 +55,8 @@ public class AddressDataListWrapper {
             for(AddressData data : addressDataList) {
                 jsonWriter.beginObject();
                 jsonWriter.name("imageid").value(data.getImageId());
-                jsonWriter.name("title").value(data.getAddress());
-                jsonWriter.name("address").value(data.getTitle());
+                jsonWriter.name("title").value(data.getTitle());
+                jsonWriter.name("address").value(data.getAddress());
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
@@ -65,8 +68,7 @@ public class AddressDataListWrapper {
         }
     }
 
-    public ArrayList<AddressData> readAddressDataFile(String filename, Context context) {
-        ArrayList<AddressData> ret = new ArrayList<>();
+    public void readAddressDataFile(String filename, Context context) {
         File file = new File(context.getFilesDir(), filename);
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
@@ -74,42 +76,57 @@ public class AddressDataListWrapper {
         try {
             if(!file.exists()) {
                 writeFirstDataFile(filename, context);
-                Log.e("File read", "File not exists");
+                return;
             }
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
             JsonReader jsonReader = new JsonReader(bufferedReader);
             jsonReader.beginArray();
             while(jsonReader.hasNext()) {
-                int imageId = jsonReader.nextInt();
-                String title = jsonReader.nextString();
-                String address = jsonReader.nextString();
+                int imageId = -1;
+                String title = "";
+                String address = "";
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String name = jsonReader.nextName();
+                    if (name.equals("imageid")) {
+                        imageId = jsonReader.nextInt();
+                    } else if (name.equals("title")) {
+                        title = jsonReader.nextString();
+                    } else if (name.equals("address")) {
+                        address = jsonReader.nextString();
+                    } else {
+                        jsonReader.skipValue();
+                    }
+                }
                 AddressData data = new AddressData(imageId, title, address);
-                ret.add(data);
+                jsonReader.endObject();
+                addressDataList.add(data);
                 Log.e("File read", data.toString() + "readed ");
             }
             jsonReader.endArray();
             jsonReader.close();
+            bufferedReader.close();
+            fileReader.close();
 
         } catch(FileNotFoundException e) {
             Log.e("File read", "File not found: "+e.toString());
         } catch(IOException e) {
             Log.e("File read", "Can't read file: "+e.toString());
         }
-        finally {
-            try {
-                bufferedReader.close();
-                fileReader.close();
-            } catch(IOException e) {
-                Log.e("File read", "Can't close inputstream: "+e.toString());
-            }
-        }
-        Log.e("result",ret.toString());
-        return ret;
+        Log.e("result",addressDataList.toString());
     }
 
     private void writeFirstDataFile(String filename, Context context) {
-        AddressData QUASARZONE_GAME = new AddressData(R.drawable.quasarzone, getString(R.string.quasarzone_game), Quasarzone.MAIN_PAGE+Quasarzone.NEWS_GAME);
+        addressDataList = new ArrayList<>();
+        AddressData QUASARZONE_GAME = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME);
+        AddressData QUASARZONE_HARDWARE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE);
+        AddressData QUASARZONE_MOBILE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE);
+
         addressDataList.add(QUASARZONE_GAME);
+        addressDataList.add(QUASARZONE_HARDWARE);
+        addressDataList.add(QUASARZONE_MOBILE);
+
+        writeAddressDataFile(filename,context);
     }
 }

@@ -95,7 +95,7 @@ public class KeywordDataListWrapper {
         BufferedReader bufferedReader = null;
 
         try {
-            if(!file.exists()) {
+            if(file.exists()) {
                 writeKeywordDataFile(filename, context);
                 Log.e("File read", "File not exists");
             }
@@ -114,22 +114,20 @@ public class KeywordDataListWrapper {
             }
             jsonReader.endArray();
             jsonReader.close();
+            bufferedReader.close();
+            fileReader.close();
 
         } catch(FileNotFoundException e) {
             Log.e("File read", "File not found: "+e.toString());
         } catch(IOException e) {
             Log.e("File read", "Can't read file: "+e.toString());
         }
-        finally {
-            try {
-                bufferedReader.close();
-                fileReader.close();
-            } catch(IOException e) {
-                Log.e("File read", "Can't close inputstream: "+e.toString());
-            }
-        }
         Log.e("result",ret.toString());
         return ret;
+    }
+
+    private void writeFirstDataFile(String filename, Context context) {
+
     }
 
     public ArrayList<KeywordData> parseKeywordData(String json) {
@@ -158,5 +156,7 @@ public class KeywordDataListWrapper {
             return null;
         }
     }
+
+
 
 }
