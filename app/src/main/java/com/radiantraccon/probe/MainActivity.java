@@ -1,6 +1,7 @@
 package com.radiantraccon.probe;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -79,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    // TODO: Debug first! then change replace function to add or something else...
                     case R.id.navigation_menu1: {
-                        //
+                        // TODO: navigate each fragment
                         break;
                     }
                     case R.id.navigation_menu2: {
@@ -137,41 +137,59 @@ public class MainActivity extends AppCompatActivity {
     //////////////////////////////////
 
 
-    public void crawl(KeywordData data) {
-        new Crawler().execute(data);
+    public void crawl(String address, String keyword, String page) {
+        crawler = new Crawler();
+        crawler.execute(address, keyword, page);
     }
 
-    private class Crawler extends AsyncTask<KeywordData, Void, ArrayList<ResultData>> {
+    private class Crawler extends AsyncTask<String, Void, ArrayList<ResultData>> {
         /* TODO:
         check http://siteaddress/robots.txt
         default image icon http://siteaddress/favicon.ico
         prevent getting blacklisted (delay random seconds?)
         get response code
         */
-        private int currentPage;
 
-        public Crawler() {
-            currentPage = 0;
-        }
-
-        public ArrayList<ResultData> crawl(String address, int page, String keyword) {
-            return Quasarzone.getData(address, page, keyword);
-        }
-
+        private ProgressDialog progressDialog;
+        private ArrayList<ResultData> results;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // TODO: Wait dialoag?
+            // temprary dialog
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("잠시 기다려 주세요.");
+            progressDialog.show();
         }
 
         @Override
-        protected ArrayList<ResultData> doInBackground(KeywordData... keywordData) {
-            return null;
+        protected ArrayList<ResultData> doInBackground(String... strings) {
+            Log.e("AsyncTask" , strings[0] + " "+ strings[1]+ " "+ strings[2]);
+            String address = strings[0];
+            String keyword = strings[1];
+            int page = Integer.parseInt(strings[2]);
+
+            switch(address) {
+                case Quasarzone.NEWS_GAME:
+                    results = Quasarzone.getData(address, keyword, page);
+            }
+            return results;
         }
 
         @Override
         protected void onPostExecute(ArrayList<ResultData> resultData) {
             super.onPostExecute(resultData);
+
+            for(ResultData data : results) {
+                Log.e("AsyncTasK", data.getTitle());
+                Log.e("AsyncTasK", data.getAddress());
+                Log.e("AsyncTasK", data.getDescription());
+                Log.e("AsyncTasK", data.getImageUrl());
+            }
+            progressDialog.dismiss();
+            Bundle bundle = new Bundle();
+            navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
         }
 
         @Override
