@@ -36,9 +36,8 @@ public class AddFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        // TODO: Initialize RecyclerView of web page addresses
-
         final EditText keywordEditText = view.findViewById(R.id.editText_keyword);
+        final EditText descEditText = view.findViewById(R.id.editText_desc);
         Button submitButton = view.findViewById(R.id.button_submit);
         Button addressButton = view.findViewById(R.id.button_address);
 
@@ -58,13 +57,14 @@ public class AddFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Send user input to MainActivity
-                String str = keywordEditText.getText().toString();
+                String keyword = keywordEditText.getText().toString();
+                String desc = descEditText.getText().toString();
                 Bundle bundle = new Bundle();
-                if(!str.equals("")) {
+                if(!keyword.equals("")) {
                     bundle.putInt("imageId", imageId);
-                    bundle.putString("title",title);
+                    bundle.putString("keyword",keyword);
                     bundle.putString("address", address);
+                    bundle.putString("desc", desc);
                     Navigation.findNavController(view).navigate(R.id.action_addFragment_to_mainFragment, bundle);
                 }
                 else {
