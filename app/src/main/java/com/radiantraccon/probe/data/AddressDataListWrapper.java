@@ -1,11 +1,14 @@
 package com.radiantraccon.probe.data;
 
 import android.content.Context;
+import android.location.Address;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import com.radiantraccon.probe.CrawlOption;
 import com.radiantraccon.probe.R;
+import com.radiantraccon.probe.site.Okky;
 import com.radiantraccon.probe.site.Quasarzone;
 
 import java.io.BufferedReader;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 public class AddressDataListWrapper {
     // data to populate the RecyclerView with
     private ArrayList<AddressData> addressDataList;
+    private ArrayList<AddressData> predefinedList;
     private AddressAdapter addressAdapter;
 
     // constructor
@@ -117,15 +121,39 @@ public class AddressDataListWrapper {
     }
 
     private void writeFirstDataFile(String filename, Context context) {
+        // TODO: update file....
         addressDataList = new ArrayList<>();
+        predefinedList = new ArrayList<>();
+        // Quasarzone
         AddressData QUASARZONE_GAME = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME);
         AddressData QUASARZONE_HARDWARE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE);
         AddressData QUASARZONE_MOBILE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE);
+        // Okky
+        AddressData OKKY_TECH = new AddressData(R.drawable.okky, context.getString(R.string.okky_tech), Okky.TECH);
+        AddressData OKKY_COLUMS = new AddressData(R.drawable.okky, context.getString(R.string.okky_columns), Okky.COLUMS);
+        AddressData OKKY_JOBS = new AddressData(R.drawable.okky, context.getString(R.string.okky_jobs), Okky.JOBS);
 
+        /*
+        predefinedList.add(QUASARZONE_GAME);
+        predefinedList.add(QUASARZONE_HARDWARE);
+        predefinedList.add(QUASARZONE_MOBILE);
+
+        predefinedList.add(OKKY_TECH);
+        predefinedList.add(OKKY_COLUMS);
+        predefinedList.add(OKKY_JOBS);
+        */
         addressDataList.add(QUASARZONE_GAME);
         addressDataList.add(QUASARZONE_HARDWARE);
         addressDataList.add(QUASARZONE_MOBILE);
 
+        addressDataList.add(OKKY_TECH);
+        addressDataList.add(OKKY_JOBS);
+        addressDataList.add(OKKY_COLUMS);
+
         writeAddressDataFile(filename,context);
+    }
+
+    private void addUpdateAddressData() {
+
     }
 }
