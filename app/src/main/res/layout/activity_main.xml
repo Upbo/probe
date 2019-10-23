@@ -15,7 +15,7 @@
         android:layout_weight="0"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="@style/CustomToolbar" />
 
     <fragment
         android:id="@+id/frameLayout"
