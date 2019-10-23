@@ -2,17 +2,30 @@ package com.radiantraccon.probe;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -24,6 +37,7 @@ import com.radiantraccon.probe.fragment.AddressFragment;
 import com.radiantraccon.probe.fragment.MainFragment;
 import com.radiantraccon.probe.fragment.OptionFragment;
 import com.radiantraccon.probe.fragment.ResultFragment;
+import com.radiantraccon.probe.site.Okky;
 import com.radiantraccon.probe.site.Quasarzone;
 
 import java.util.ArrayList;
@@ -37,18 +51,12 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.INTERNET
     };
     // TODO: data classes could be extends abstract class
-    private Fragment mainFragment = new MainFragment();
-    private Fragment optionFragment = new OptionFragment();
-    private Fragment addFragment = new AddFragment();
-    private Fragment addressFragment = new AddressFragment();
-    private Fragment resultFragment = new ResultFragment();
     // Toolbar
-    private Toolbar mainToolbar;
-    private Toolbar noButtonToolbar;
 
     private NavController navController;
-    private AppBarConfiguration appBarConfiguration;
     private Crawler crawler = new Crawler();
+
+    private ArrayList<ResultData> histoyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,35 +69,48 @@ public class MainActivity extends AppCompatActivity {
         }
         //////////////////////////////////
         navController = Navigation.findNavController(this,R.id.frameLayout);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        mainToolbar = findViewById(R.id.toolbar);
+        Toolbar mainToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
-        NavigationUI.setupWithNavController(mainToolbar, navController);
+        mainToolbar.setTitleTextColor(Color.WHITE);
 
         //////////////////////////////////
         //region BottomNavigationView
-        BottomNavigationView bnv = findViewById(R.id.bottomNavView);
-        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_menu1: {
-                        // TODO: navigate each fragment
+        final BottomNavigationView bnv = findViewById(R.id.bottomNavView);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.mainFragment,
+                R.id.historyFragment,
+                R.id.optionFragment
+        ).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(mainToolbar, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bnv, navController);
 
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                int id = destination.getId();
+                switch(id) {
+                    case R.id.webFragment:
+                        getSupportActionBar().hide();
+                        bnv.setVisibility(View.INVISIBLE);
                         break;
-                    }
-                    case R.id.navigation_menu2: {
-                        break;
-                    }
-                    case R.id.navigation_menu3: {
-                        break;
-                    }
+                    default:
+                        getSupportActionBar().show();
+                        bnv.setVisibility(View.VISIBLE);
                 }
-                return true;
             }
         });
-        // endregion
-        /////////////////////////////////
+
+        CrawlOption.loadPreferences(this);
+    }
+
+    public void addHistory(ResultData data) {
+        histoyList.add(data);
+    }
+
+    public ArrayList<ResultData> getHistoryList() {
+        return histoyList;
     }
 
 
@@ -130,12 +151,13 @@ public class MainActivity extends AppCompatActivity {
     // endregion
     //////////////////////////////////
 
-    public void crawl(String address, String keyword, String page, String nav) {
+    public void crawl(String address, String keyword, String startPage, String lastPage, String nav) {
         // if nav == true, navigate mainFragment to resultFragment
         // if nav == false, don't
         crawler = new Crawler();
-        crawler.execute(address, keyword, page, nav);
+        crawler.execute(address, keyword, startPage, lastPage, nav);
     }
+
 
     private class Crawler extends AsyncTask<String, Void, ArrayList<ResultData>> {
         /* TODO:
@@ -143,13 +165,17 @@ public class MainActivity extends AppCompatActivity {
         default image icon http://siteaddress/favicon.ico
         prevent getting blacklisted (delay random seconds?)
         get response code
+
+        TODO: execute in background per X minute, compare data, alarm new item
+        TODO: AlarmManager, Service, file read/write for resultData?
         */
 
         private ProgressDialog progressDialog;
-        private ArrayList<ResultData> results;
+        private ArrayList<ResultData> results = new ArrayList<>();
         private String address;
         private String keyword;
-        private String page;
+        private String startPage;
+        private String lastPage;
         private String nav;
         @Override
         protected void onPreExecute() {
@@ -164,15 +190,28 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<ResultData> doInBackground(String... strings) {
-            Log.e("AsyncTask" , strings[0] + " "+ strings[1]+ " "+ strings[2]);
+            Log.e("AsyncTask" , "Address: " + strings[0] + "\nKeyword: "+ strings[1]+ "\nstartPage: "+ strings[2]+ "\nlastPage: " +strings[3]);
             address = strings[0];
             keyword = strings[1];
-            page = strings[2];
-            nav = strings[3];
-            int p = Integer.parseInt(page);
+            startPage = strings[2];
+            lastPage = strings[3];
+            nav = strings[4];
+            int start = Integer.parseInt(startPage);
+            int last = Integer.parseInt(lastPage);
             switch(address) {
                 case Quasarzone.NEWS_GAME:
-                    results = Quasarzone.getData(address, keyword, p);
+                case Quasarzone.NEWS_HARDWARE:
+                case Quasarzone.NEWS_MOBILE:
+                    for(int i=start; i<=last; i++) {
+                        results.addAll(Quasarzone.getData(address, keyword, i));
+                    }
+                    break;
+                case Okky.TECH:
+                case Okky.COLUMS:
+                case Okky.JOBS:
+                    for(int i=start; i<=last; i++) {
+                        results.addAll(Okky.getData(address, keyword, i));
+                    }
             }
             return results;
         }
@@ -186,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
             bundle.putParcelableArrayList("results", results);
             bundle.putString("keyword", keyword);
             bundle.putString("address", address);
-            bundle.putString("page", page);
+            bundle.putString("startPage", startPage);
+            bundle.putString("lastPage", lastPage);
             if(nav.equals("true")) {
                 navController.navigate(R.id.action_mainFragment_to_resultFragment, bundle);
             } else {
