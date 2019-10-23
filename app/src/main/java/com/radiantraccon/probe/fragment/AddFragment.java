@@ -1,6 +1,7 @@
 package com.radiantraccon.probe.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.radiantraccon.probe.R;
 
 
@@ -64,10 +66,13 @@ public class AddFragment extends Fragment {
                     bundle.putString("address", address);
                     bundle.putString("desc", desc);
                     Navigation.findNavController(view).navigate(R.id.action_addFragment_to_mainFragment, bundle);
-                }
-                else {
-                    bundle.putString("text", getString(R.string.dialog_nullInput));
-                    Navigation.findNavController(view).navigate(R.id.action_addFragment_to_eventDialogFragment, bundle);
+                } else {
+                    Context context = getContext();
+                    new MaterialAlertDialogBuilder(context)
+                            .setMessage(context.getString(R.string.dialog_nullInput))
+                            .setPositiveButton(context.getString(R.string.dialog_confirm), null)
+                            .show();
+
                 }
             }
         });
