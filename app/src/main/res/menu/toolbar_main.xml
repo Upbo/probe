@@ -3,14 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/addFragment"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_add"
         android:title="@string/toolbar_add"
         app:showAsAction="always" />
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/toolbar_search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always"
-        app:title="always" />
+        android:id="@+id/toolbar_sort"
+        android:icon="@drawable/ic_action_sort"
+        android:title="sort"
+        app:showAsAction="always" />
 </menu>
