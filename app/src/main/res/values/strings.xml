@@ -5,13 +5,13 @@
     <string name="resultData_filename">result_data.json</string>
     <string name="preferences_filename">sharedPref_data</string>
 
-    <string name="quasarzone_game">Quasarzone game news</string>
-    <string name="quasarzone_hardware">Quasarzone hardware news</string>
-    <string name="quasarzone_mobile">Quasarzone mobile news</string>
+    <string name="quasarzone_game">퀘이사존 게임 뉴스</string>
+    <string name="quasarzone_hardware">퀘이사존 하드웨어 뉴스 </string>
+    <string name="quasarzone_mobile">퀘이사존 모바일 뉴스</string>
 
-    <string name="okky_tech">Okky tech</string>
-    <string name="okky_columns">Okky columns</string>
-    <string name="okky_jobs">Okky job</string>
+    <string name="okky_tech">Okky Tech</string>
+    <string name="okky_columns">Okky 칼럼</string>
+    <string name="okky_jobs">Okky Jobs</string>
 
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>
