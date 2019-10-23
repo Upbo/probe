@@ -23,9 +23,10 @@
     <string name="toolbar_sortByAddress">주소로 정렬되었습니다.</string>
     <string name="toolbar_sortByDesc">설명으로 정렬되었습니다.</string>
 
+    <string name="mainFragment_noItems">저장된 설정이 없습니다.</string>
 
     <string name="addFragment_keyword">검색할 키워드를 입력하세요.</string>
-    <string name="addFragment_desc">알아보기 쉽게 설명을 추가해주세요.</string>
+    <string name="addFragment_desc">간단한 설명을 입력하세요.</string>
     <string name="addFragment_submit">확인</string>
     <string name="addFragment_address">사이트를 선택해주세요.</string>
 

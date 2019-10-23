@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,8 +76,18 @@ public class MainFragment extends Fragment {
                 keywords.appendKeywordDataFile(getString(R.string.keywordData_filename), getContext());
             }
         }
-        // RecyclerView
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView_main);
+        TextView textView = view.findViewById(R.id.textView_noItems);
+
+        if(keywords.getKeywordDataList().size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        // RecyclerView
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
         keywords.initAdapter();
