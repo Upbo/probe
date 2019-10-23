@@ -47,13 +47,36 @@ public class KeywordDataListWrapper {
         keywordDataList.add(data);
     }
     // sort arrayList
-    public void sort() {
+    public void sortByTitle() {
         Collections.sort(keywordDataList, new Comparator<KeywordData>() {
             @Override
             public int compare(KeywordData o1, KeywordData o2) {
                 return o1.getKeyword().compareTo(o2.getKeyword());
             }
         });
+    }
+
+    public void sortByAddress() {
+        Collections.sort(keywordDataList, new Comparator<KeywordData>() {
+            @Override
+            public int compare(KeywordData o1, KeywordData o2) {
+                return o1.getKeyword().compareTo(o2.getAddress());
+            }
+        });
+
+    }
+
+    public void sortByDesc() {
+        Collections.sort(keywordDataList, new Comparator<KeywordData>() {
+            @Override
+            public int compare(KeywordData o1, KeywordData o2) {
+                return o1.getKeyword().compareTo(o2.getDescription());
+            }
+        });
+    }
+    public void removeKeywordData(int pos) {
+        keywordDataList.remove(pos);
+        keywordAdapter.notifyItemRemoved(pos);
     }
 
     public void writeKeywordDataFile(String filename, Context context) {
@@ -88,6 +111,7 @@ public class KeywordDataListWrapper {
     }
 
     public void appendKeywordDataFile(String filename, Context context) {
+        // TODO: DONT WRITE/CREATE FILE AGAIN, need REAL append method :(
         File file = new File(context.getFilesDir(), filename);
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
@@ -143,7 +167,7 @@ public class KeywordDataListWrapper {
                         keyword = jsonReader.nextString();
                     } else if (name.equals("address")) {
                         address = jsonReader.nextString();
-                    } else if (name.equals("desc")) {
+                    } else if (name.equals("description")) {
                         desc = jsonReader.nextString();
                     } else {
                         jsonReader.skipValue();
