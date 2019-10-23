@@ -2,28 +2,18 @@ package com.radiantraccon.probe;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -32,11 +22,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.radiantraccon.probe.data.ResultData;
-import com.radiantraccon.probe.fragment.AddFragment;
-import com.radiantraccon.probe.fragment.AddressFragment;
-import com.radiantraccon.probe.fragment.MainFragment;
-import com.radiantraccon.probe.fragment.OptionFragment;
-import com.radiantraccon.probe.fragment.ResultFragment;
 import com.radiantraccon.probe.site.Okky;
 import com.radiantraccon.probe.site.Quasarzone;
 
