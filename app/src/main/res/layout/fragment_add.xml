@@ -3,44 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="10"
     tools:context=".fragment.AddFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addFragment_title" />
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <EditText
             android:id="@+id/editText_keyword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"/>
+            android:hint="@string/addFragment_keyword"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:ems="10"
+            android:hint="@string/addFragment_desc"
             android:inputType="textPersonName" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
 
         <Button
             android:id="@+id/button_address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addFragment_address" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/addFragment_address"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Button
             android:id="@+id/button_submit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addFragment_submit" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/addFragment_submit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </LinearLayout>
 </FrameLayout>
