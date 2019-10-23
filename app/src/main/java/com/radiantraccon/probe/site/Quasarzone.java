@@ -30,16 +30,16 @@ public class Quasarzone {
             int size = elements.size();
 
             for(Element e : elements) {
-                Elements temp = e.select("li div[class=wr-subject] a");
+                Elements temp = e.select("div[class=wr-subject]").select("a[class=item-subject]");
+
                 String imageUrl = FAVICON;
-                String title = temp.text();
-                /*
+                String title = temp.first().ownText();
+
                 if(!title.contains(keyword)) {
                     continue;
                 }
 
-                 */
-                String desc = e.select("li div[class=wr-category fs11 hidden-xs]").text();
+                String desc = e.select("div[class=wr-category fs11 hidden-xs]").text();
                 String link = temp.attr("href");
                 Log.e("Result Data", link);
                 ret.add(new ResultData(imageUrl, title, link, desc));
