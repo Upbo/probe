@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.radiantraccon.probe.CrawlOption;
 import com.radiantraccon.probe.MainActivity;
 import com.radiantraccon.probe.R;
@@ -134,22 +134,21 @@ public class MainFragment extends Fragment {
                     case 0:
                         keywords.sortByTitle();
                         sortMode++;
-                        Toast.makeText(context, context.getString(R.string.toolbar_sortByTitle), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), context.getString(R.string.toolbar_sortByTitle), Snackbar.LENGTH_SHORT).show();
                         break;
                     case 1:
                         keywords.sortByAddress();
                         sortMode++;
-                        Toast.makeText(context, context.getString(R.string.toolbar_sortByAddress), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), context.getString(R.string.toolbar_sortByAddress), Snackbar.LENGTH_SHORT).show();
                         break;
                     case 2:
                         keywords.sortByDesc();
-                        sortMode++;
-                        Toast.makeText(context, context.getString(R.string.toolbar_sortByDesc), Toast.LENGTH_SHORT).show();
+                        sortMode++;Snackbar.make(getView(), context.getString(R.string.toolbar_sortByDesc), Snackbar.LENGTH_SHORT).show();
                         break;
                     default:
                         keywords.sortByTitle();
-                        sortMode = 0;
-                        Toast.makeText(context, context.getString(R.string.toolbar_sortByTitle), Toast.LENGTH_SHORT).show();
+                        sortMode = 1;
+                        Snackbar.make(getView(), context.getString(R.string.toolbar_sortByTitle), Snackbar.LENGTH_SHORT).show();
                         break;
 
                 }
