@@ -7,20 +7,30 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.radiantraccon.probe.fragment.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="탐색"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
         <action
             android:id="@+id/action_mainFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_optionFragment"
+            app:destination="@id/optionFragment"
+            app:popUpTo="@+id/optionFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
+            app:popUpTo="@+id/historyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.radiantraccon.probe.fragment.ResultFragment"
-        android:label="fragment_result"
-        tools:layout="@layout/fragment_result" >
+        android:label="결과"
+        tools:layout="@layout/fragment_result">
         <action
             android:id="@+id/action_resultFragment_to_webFragment"
             app:destination="@id/webFragment" />
@@ -33,8 +43,8 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.radiantraccon.probe.fragment.AddFragment"
-        android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        android:label="추가"
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -52,13 +62,15 @@
         tools:layout="@layout/dialog_event" >
         <action
             android:id="@+id/action_eventDialogFragment_to_addFragment"
-            app:destination="@id/addFragment" />
+            app:destination="@id/addFragment"
+            app:popUpTo="@+id/addFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.radiantraccon.probe.fragment.AddressFragment"
-        android:label="fragment_address"
-        tools:layout="@layout/fragment_address" >
+        android:label="주소"
+        tools:layout="@layout/fragment_address">
         <action
             android:id="@+id/action_addressFragment_to_addFragment"
             app:destination="@id/addFragment"
@@ -70,4 +82,33 @@
         android:name="com.radiantraccon.probe.fragment.WebFragment"
         android:label="fragment_web"
         tools:layout="@layout/fragment_web" />
+    <fragment
+        android:id="@+id/optionFragment"
+        android:name="com.radiantraccon.probe.fragment.OptionFragment"
+        android:label="설정"
+        tools:layout="@layout/fragment_option" />
+    <action
+        android:id="@+id/action_global_optionFragment"
+        app:destination="@id/optionFragment"
+        app:popUpTo="@+id/optionFragment"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:popUpTo="@+id/mainFragment"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.radiantraccon.probe.fragment.historyFragment"
+        android:label="기록"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_historyFragment"
+        app:destination="@id/historyFragment"
+        app:popUpTo="@+id/historyFragment"
+        app:popUpToInclusive="true" />
 </navigation>
