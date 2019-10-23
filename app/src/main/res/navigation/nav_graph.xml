@@ -49,23 +49,9 @@
             android:id="@+id/action_addFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <action
-            android:id="@+id/action_addFragment_to_eventDialogFragment"
-            app:destination="@id/eventDialogFragment" />
-        <action
             android:id="@+id/action_addFragment_to_addressFragment"
             app:destination="@+id/addressFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/eventDialogFragment"
-        android:name="com.radiantraccon.probe.fragment.EventDialogFragment"
-        android:label="dialog_event"
-        tools:layout="@layout/dialog_event" >
-        <action
-            android:id="@+id/action_eventDialogFragment_to_addFragment"
-            app:destination="@id/addFragment"
-            app:popUpTo="@+id/addFragment"
-            app:popUpToInclusive="true" />
-    </dialog>
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.radiantraccon.probe.fragment.AddressFragment"
