@@ -38,10 +38,6 @@
     <string name="optionFragment_setTime">백그라운드 탐색 주기(분)</string>
     <string name="optionFragment_save">저 장</string>
 
-    <string name="dialog_nullInput">Some value is null</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="dialog_nullInput">값을 입력해주세요</string>
+    <string name="dialog_confirm">확인</string>
 </resources>
