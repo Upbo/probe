@@ -1,21 +1,26 @@
 package com.radiantraccon.probe.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.radiantraccon.probe.CrawlOption;
 import com.radiantraccon.probe.MainActivity;
 import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.data.KeywordAdapter;
@@ -31,7 +36,7 @@ public class MainFragment extends Fragment {
     private String paramKeyword;
     private String paramAddress;
     private String paramDesc;
-
+    private int sortMode = 0;
     // ex:) class Data;
     //      class KeywordData extends Data ... etc
     // Data ArrayList of RecyclerView
@@ -43,6 +48,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
+        sortMode = 0;
         keywords.readKeywordDataFile(getString(R.string.keywordData_filename), getContext());
         super.onCreate(savedInstanceState);
     }
@@ -69,7 +76,7 @@ public class MainFragment extends Fragment {
             }
         }
         // RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_main);
+        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView_main);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
         keywords.initAdapter();
@@ -81,9 +88,30 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(View v, int pos) {
                 KeywordData data = adapter.getItem(pos);
-                ((MainActivity)getActivity()).crawl(data.getAddress(), data.getKeyword(), "1", "true");
+                int startPage = 1;
+                int lastPage = startPage + CrawlOption.pagesPerCrawl - 1;
+                ((MainActivity)getActivity()).crawl(data.getAddress(), data.getKeyword(), Integer.toString(startPage), Integer.toString(lastPage), "true");
             }
         });
+
+        // RecyclerView Swipe Helper
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                Log.e("RecyclerView", "onMove");
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                // TODO: Confirm for deletion?
+                keywords.removeKeywordData(pos);
+                keywords.appendKeywordDataFile(getString(R.string.keywordData_filename), getContext());
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return view;
     }
 
@@ -100,7 +128,32 @@ public class MainFragment extends Fragment {
             case R.id.addFragment:
                 Navigation.findNavController(getView()).navigate(R.id.action_mainFragment_to_addFragment);
                 return true;
-            case R.id.searchFragment:
+            case R.id.toolbar_sort:
+                Context context = getContext();
+                switch(sortMode) {
+                    case 0:
+                        keywords.sortByTitle();
+                        sortMode++;
+                        Toast.makeText(context, context.getString(R.string.toolbar_sortByTitle), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        keywords.sortByAddress();
+                        sortMode++;
+                        Toast.makeText(context, context.getString(R.string.toolbar_sortByAddress), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        keywords.sortByDesc();
+                        sortMode++;
+                        Toast.makeText(context, context.getString(R.string.toolbar_sortByDesc), Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        keywords.sortByTitle();
+                        sortMode = 0;
+                        Toast.makeText(context, context.getString(R.string.toolbar_sortByTitle), Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+                keywords.getKeywordAdapter().notifyDataSetChanged();
                 return true;
         }
         return super.onOptionsItemSelected(item);
