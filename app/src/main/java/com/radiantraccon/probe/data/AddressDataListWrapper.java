@@ -10,6 +10,7 @@ import com.radiantraccon.probe.CrawlOption;
 import com.radiantraccon.probe.R;
 import com.radiantraccon.probe.site.Okky;
 import com.radiantraccon.probe.site.Quasarzone;
+import com.radiantraccon.probe.site.Ruliweb;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -133,7 +134,8 @@ public class AddressDataListWrapper {
         AddressData OKKY_TECH = new AddressData(0, context.getString(R.string.okky_tech), Okky.TECH);
         AddressData OKKY_COLUMS = new AddressData(0, context.getString(R.string.okky_columns), Okky.COLUMS);
         AddressData OKKY_JOBS = new AddressData(0, context.getString(R.string.okky_jobs), Okky.JOBS);
-
+        //
+        AddressData RULIWEB_SALE = new AddressData(0, context.getString(R.string.ruliweb_sale), Ruliweb.NEWS_SALE);
         /*
         predefinedList.add(QUASARZONE_GAME);
         predefinedList.add(QUASARZONE_HARDWARE);
@@ -150,6 +152,8 @@ public class AddressDataListWrapper {
         addressDataList.add(OKKY_TECH);
         addressDataList.add(OKKY_JOBS);
         addressDataList.add(OKKY_COLUMS);
+
+        addressDataList.add(RULIWEB_SALE);
 
         writeAddressDataFile(filename,context);
     }

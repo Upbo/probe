@@ -25,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.radiantraccon.probe.data.ResultData;
 import com.radiantraccon.probe.site.Okky;
 import com.radiantraccon.probe.site.Quasarzone;
+import com.radiantraccon.probe.site.Ruliweb;
 
 import java.util.ArrayList;
 
@@ -201,6 +202,13 @@ public class MainActivity extends AppCompatActivity {
                     for(int i=start; i<=last; i++) {
                         results.addAll(Okky.getData(address, keyword, i));
                     }
+                    break;
+                case Ruliweb.NEWS_SALE:
+                    for(int i=start; i<=last; i++) {
+                        results.addAll(Ruliweb.getData(address, keyword, i));
+                    }
+                    break;
+
             }
             return results;
         }
