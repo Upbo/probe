@@ -21,6 +21,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/addFragment_keyword"
+            android:imeOptions="actionNext"
             android:inputType="textPersonName" />
 
         <EditText
@@ -30,6 +31,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/addFragment_desc"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName" />
 
         <Space
