@@ -17,6 +17,7 @@ public class Quasarzone {
     public static final String NEWS_GAME = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_game";
     public static final String NEWS_HARDWARE = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_hardware";
     public static final String NEWS_MOBILE = "https://quasarzone.co.kr/bbs/board.php?bo_table=qn_mobile";
+    public static final String NEWS_SALE = "https://quasarzone.co.kr/bbs/board.php?bo_table=qb_saleinfo";
     public static final String FAVICON = "https://quasarzone.co.kr/favicon.ico";
     public static final String PAGE = "&page=";
 

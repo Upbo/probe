@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 case Quasarzone.NEWS_GAME:
                 case Quasarzone.NEWS_HARDWARE:
                 case Quasarzone.NEWS_MOBILE:
+                case Quasarzone.NEWS_SALE:
                     for(int i=start; i<=last; i++) {
                         results.addAll(Quasarzone.getData(address, keyword, i));
                     }
@@ -204,6 +205,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case Ruliweb.NEWS_SALE:
+                case Ruliweb.NEWS_PC:
+                case Ruliweb.NEWS_MOBILE:
+                case Ruliweb.NEWS_CONSOLE:
                     for(int i=start; i<=last; i++) {
                         results.addAll(Ruliweb.getData(address, keyword, i));
                     }

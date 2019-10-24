@@ -127,15 +127,20 @@ public class AddressDataListWrapper {
         predefinedList = new ArrayList<>();
         // Quasarzone
         // TODO: use favicon from glide download
-        AddressData QUASARZONE_GAME = new AddressData(0, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME);
-        AddressData QUASARZONE_HARDWARE = new AddressData(0, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE);
-        AddressData QUASARZONE_MOBILE = new AddressData(0, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE);
+        addressDataList.add(new AddressData(0, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME));
+        addressDataList.add(new AddressData(0, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE));
+        addressDataList.add(new AddressData(0, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE));
+        addressDataList.add(new AddressData(0, context.getString(R.string.quasarzone_sale), Quasarzone.NEWS_SALE));
         // Okky
-        AddressData OKKY_TECH = new AddressData(0, context.getString(R.string.okky_tech), Okky.TECH);
-        AddressData OKKY_COLUMS = new AddressData(0, context.getString(R.string.okky_columns), Okky.COLUMS);
-        AddressData OKKY_JOBS = new AddressData(0, context.getString(R.string.okky_jobs), Okky.JOBS);
-        //
-        AddressData RULIWEB_SALE = new AddressData(0, context.getString(R.string.ruliweb_sale), Ruliweb.NEWS_SALE);
+        addressDataList.add(new AddressData(0, context.getString(R.string.okky_tech), Okky.TECH));
+        addressDataList.add(new AddressData(0, context.getString(R.string.okky_columns), Okky.COLUMS));
+        addressDataList.add(new AddressData(0, context.getString(R.string.okky_jobs), Okky.JOBS));
+        // Ruliweb
+        addressDataList.add(new AddressData(0, context.getString(R.string.ruliweb_sale), Ruliweb.NEWS_SALE));
+        addressDataList.add(new AddressData(0, context.getString(R.string.ruliweb_pc), Ruliweb.NEWS_PC));
+        addressDataList.add(new AddressData(0, context.getString(R.string.ruliweb_console), Ruliweb.NEWS_CONSOLE));
+        addressDataList.add(new AddressData(0, context.getString(R.string.ruliweb_mobile), Ruliweb.NEWS_MOBILE));
+
         /*
         predefinedList.add(QUASARZONE_GAME);
         predefinedList.add(QUASARZONE_HARDWARE);
@@ -144,17 +149,7 @@ public class AddressDataListWrapper {
         predefinedList.add(OKKY_TECH);
         predefinedList.add(OKKY_COLUMS);
         predefinedList.add(OKKY_JOBS);
-        */
-        addressDataList.add(QUASARZONE_GAME);
-        addressDataList.add(QUASARZONE_HARDWARE);
-        addressDataList.add(QUASARZONE_MOBILE);
-
-        addressDataList.add(OKKY_TECH);
-        addressDataList.add(OKKY_JOBS);
-        addressDataList.add(OKKY_COLUMS);
-
-        addressDataList.add(RULIWEB_SALE);
-
+*/
         writeAddressDataFile(filename,context);
     }
 

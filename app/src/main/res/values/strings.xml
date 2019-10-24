@@ -5,6 +5,7 @@
     <string name="resultData_filename">result_data.json</string>
     <string name="preferences_filename">sharedPref_data</string>
 
+    <string name="quasarzone_sale">퀘이사존 할인정보 게시판</string>
     <string name="quasarzone_game">퀘이사존 게임 뉴스</string>
     <string name="quasarzone_hardware">퀘이사존 하드웨어 뉴스 </string>
     <string name="quasarzone_mobile">퀘이사존 모바일 뉴스</string>
@@ -14,7 +15,9 @@
     <string name="okky_jobs">Okky Jobs</string>
 
     <string name="ruliweb_sale">루리웹 핫딜 게시판</string>
-
+    <string name="ruliweb_pc">루리웹 PC정보 게시판</string>
+    <string name="ruliweb_console">루리웹 콘솔정보 게시판</string>
+    <string name="ruliweb_mobile">루리웹 모바일정보 게시판</string>
     <string name="bottom_menu1">Search</string>
     <string name="bottom_menu2">History</string>
     <string name="bottom_menu3">Settings</string>
