@@ -125,13 +125,14 @@ public class AddressDataListWrapper {
         addressDataList = new ArrayList<>();
         predefinedList = new ArrayList<>();
         // Quasarzone
-        AddressData QUASARZONE_GAME = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME);
-        AddressData QUASARZONE_HARDWARE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE);
-        AddressData QUASARZONE_MOBILE = new AddressData(R.drawable.quasarzone, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE);
+        // TODO: use favicon from glide download
+        AddressData QUASARZONE_GAME = new AddressData(0, context.getString(R.string.quasarzone_game), Quasarzone.NEWS_GAME);
+        AddressData QUASARZONE_HARDWARE = new AddressData(0, context.getString(R.string.quasarzone_hardware), Quasarzone.NEWS_HARDWARE);
+        AddressData QUASARZONE_MOBILE = new AddressData(0, context.getString(R.string.quasarzone_mobile), Quasarzone.NEWS_MOBILE);
         // Okky
-        AddressData OKKY_TECH = new AddressData(R.drawable.okky, context.getString(R.string.okky_tech), Okky.TECH);
-        AddressData OKKY_COLUMS = new AddressData(R.drawable.okky, context.getString(R.string.okky_columns), Okky.COLUMS);
-        AddressData OKKY_JOBS = new AddressData(R.drawable.okky, context.getString(R.string.okky_jobs), Okky.JOBS);
+        AddressData OKKY_TECH = new AddressData(0, context.getString(R.string.okky_tech), Okky.TECH);
+        AddressData OKKY_COLUMS = new AddressData(0, context.getString(R.string.okky_columns), Okky.COLUMS);
+        AddressData OKKY_JOBS = new AddressData(0, context.getString(R.string.okky_jobs), Okky.JOBS);
 
         /*
         predefinedList.add(QUASARZONE_GAME);
