@@ -1,32 +1,21 @@
 # Probe
-특정 사이트 크롤링을 위한 앱입니다.  
-  
-기존에 있는 포털 사이트에서 검색을 할 경우 포털 사이트의 목적은 검색어를 포함한 정보를 최대한 많이 보여주는 것 입니다.  
-  
-따라서 옵션을 통해 기간이나 사이트를 지정해줘도 불필요한 정보가 과다하게 나옵니다.  
-  
-이로인해 유저에게 필요한 정보가 묻히고, 유저 입장에서는 다시 검색해보거나 직접 해당 사이트를 들어가서 검색하는 게 나은 경우가 많습니다.  
-  
-게다가 사이트가 여러곳이라면 검색에 낭비되는 시간은 점점 늘어나게 됩니다.  
-  
-이처럼 특정 정보를 원할 때 소비하는 시간을 줄이고자 만들게 되었습니다.  
-  
-  
-향후에는 백그라운드에서 검색을 해주어서 새로운 글이 올라올 경우 알람이 뜨게 할 예정입니다.    
-  
-## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
-Android Studio  
-Java Development Kit  
-  
-## 설치 안내 (Installation Process)
-[Android Studio Installation](https://developer.android.com/studio/install)을 참고해주세요.
-  
-## 사용법 (Getting Started)
-앱을 실행하고 오른쪽 상단의 +버튼을 눌러 데이터를 추가하신 후 사용하시면 됩니다.
-  
-## 파일 정보 및 목록 (File Manifest)
-* fragment/  
-Fragment 관련 파일입니다. Single Activity 구조를 따르고 있습니다.  
+특정 사이트 크롤링을 위한 앱입니다.<br><br>
+기존에 있는 포털 사이트에서 검색을 할 경우 포털 사이트의 목적은 검색어를 포함한 정보를 최대한 많이 보여주는 것 입니다.<br><br>
+따라서 옵션을 통해 기간이나 사이트를 지정해줘도 불필요한 정보가 과다하게 나옵니다.<br><br>
+이로인해 유저에게 필요한 정보가 묻히고, 유저 입장에서는 다시 검색해보거나 직접 해당 사이트를 들어가서 검색하는 게 나은 경우가 많습니다.<br><br>
+게다가 사이트가 여러곳이라면 검색에 낭비되는 시간은 점점 늘어나게 됩니다.<br><br>
+이처럼 특정 정보를 원할 때 소비하는 시간을 줄이고자 만들게 되었습니다.<br><br><br>
+향후에는 백그라운드에서 검색을 해주어서 새로운 글이 올라올 경우 알람이 뜨게 할 예정입니다.<br><br><br>
+## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites) <br>
+Android Studio<br>
+Java Development Kit<br><br><br>
+## 설치 안내 (Installation Process) <br>
+[Android Studio Installation](https://developer.android.com/studio/install)을 참고해주세요.<br><br><br>
+## 사용법 (Getting Started) <br>
+앱을 실행하고 오른쪽 상단의 +버튼을 눌러 데이터를 추가하신 후 사용하시면 됩니다.<br><br><br>
+## 파일 정보 및 목록 (File Manifest) <br>
+* fragment/ <br>
+Fragment 관련 파일입니다. Single Activity 구조를 따르고 있습니다.<br>
 [Navigation Component](https://developer.android.com/guide/navigation)을 이용하여 각각의 Fragment로 이동합니다.  
 * site/  
 특정 사이트 관련 파일입니다. 해당 사이트 게시판에 대한 크롤링 기능이 하드코딩 되어 있습니다.  
