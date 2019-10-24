@@ -6,6 +6,11 @@
 게다가 사이트가 여러곳이라면 검색에 낭비되는 시간은 점점 늘어나게 됩니다.<br>
 이처럼 특정 정보를 원할 때 소비하는 시간을 줄이고자 만들게 되었습니다.<br>
 향후에는 백그라운드에서 검색을 해주어서 새로운 글이 올라올 경우 알람이 뜨게 할 예정입니다.<br><br>
+## 실행 화면 (Screenshot)
+![스크린샷1](/screenshots/5_추가된 메인화면.png?raw=true) 
+![스크린샷2](/screenshots/7_키보드 결과1.png?raw=true) 
+![스크린샷3](/screenshots/8_결과2.png?raw=true)
+<br><br>
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites) <br>
 Android Studio<br><br>
 Java Development Kit<br><br>
