@@ -93,7 +93,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
             //icon.setImageResource(data.getImageUrl());
             title.setText(data.getTitle());
             desc.setText(data.getDescription());
-
+            address.setText(data.getAddress());
         }
     }
 }
