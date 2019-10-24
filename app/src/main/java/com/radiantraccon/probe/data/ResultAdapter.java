@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.bumptech.glide.Glide;
 import com.radiantraccon.probe.R;
 
 import java.util.ArrayList;
@@ -38,6 +39,11 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
 
     @Override
     public void onBindViewHolder(ResultAdapter.ResultViewHolder holder, int position) {
+
+        Glide.with(holder.itemView)
+                .load(resultDataList.get(position).getImageUrl())
+                .override(72, 72)
+                .into(holder.icon);
         holder.bind(resultDataList.get(position));
     }
 
@@ -87,6 +93,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
             //icon.setImageResource(data.getImageUrl());
             title.setText(data.getTitle());
             desc.setText(data.getDescription());
+
         }
     }
 }
