@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.radiantraccon.probe.R;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         }
 
         public void bind(AddressData data) {
-            icon.setImageResource(data.getImageId());
+            //icon.setImageResource(data.getImageId());
             title.setText(data.getTitle());
             address.setText(data.getAddress());
         }

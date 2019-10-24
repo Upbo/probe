@@ -80,7 +80,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
         }
 
         public void bind(KeywordData data) {
-            icon.setImageResource(data.getImageId());
+            //icon.setImageResource(data.getImageId());
             keyword.setText(data.getKeyword());
             desc.setText(data.getDescription());
             address.setText(data.getAddress());
