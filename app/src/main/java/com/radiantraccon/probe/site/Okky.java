@@ -17,7 +17,7 @@ public class Okky {
     public static final String TECH = "https://okky.kr/articles/tech";
     public static final String COLUMS = "https://okky.kr/articles/columns";
     public static final String JOBS = "https://okky.kr/articls/jobs";
-    public static final String FAVICON = "https://okky.kr/favicon.ico";
+    public static final String FAVICON = "https://okky.kr/assets/favicon-4ddd8035b72404da5a8c298cbaacad86.ico";
     public static final String PAGE = "?offset=";
 
 
