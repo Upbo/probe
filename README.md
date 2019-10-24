@@ -8,11 +8,10 @@
 향후에는 백그라운드에서 검색을 해주어서 새로운 글이 올라올 경우 알람이 뜨게 할 예정입니다.<br><br>
 ## 실행 화면 (Screenshot)
 <div>
-<img src="./screenshots/5_추가된_메인화면.png" width="200px"/>
-<img src="./screenshots/7_키보드 결과1.png" width="200px"/>
-<img src="./screenshots/8_결과2.png" width="200px"/>
+<img src="./screenshots/5_mainWithData.png" width="200px"/>
+<img src="./screenshots/7_result1.png" width="200px"/>
+<img src="./screenshots/8_web2.png" width="200px"/>
 </div>
-![1](./screenshots/5_추가된_메인화면.png)
 <br><br>
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites) <br>
 Android Studio<br><br>
