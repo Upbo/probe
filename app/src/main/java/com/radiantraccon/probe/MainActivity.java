@@ -20,6 +20,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.radiantraccon.probe.data.ResultData;
 import com.radiantraccon.probe.site.Okky;
@@ -143,14 +144,16 @@ public class MainActivity extends AppCompatActivity {
         crawler.execute(address, keyword, startPage, lastPage, nav);
     }
 
-
     private class Crawler extends AsyncTask<String, Void, ArrayList<ResultData>> {
-        /* TODO:
-        check http://siteaddress/robots.txt
-        default image icon http://siteaddress/favicon.ico
-        prevent getting blacklisted (delay random seconds?)
-        get response code
 
+        /* TODO:
+         * check http://siteaddress/robots.txt
+         * default image icon http://siteaddress/favicon.ico
+         * prevent getting blacklisted (delay random seconds?)
+         * get response code
+
+         *
+         * change ArrayList<ResultData> parameter if dont need
         TODO: execute in background per X minute, compare data, alarm new item
         TODO: AlarmManager, Service, file read/write for resultData?
         */
@@ -184,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
             int start = Integer.parseInt(startPage);
             int last = Integer.parseInt(lastPage);
             switch(address) {
+                // TODO: if imageURL is favicon, donwload once
                 case Quasarzone.NEWS_GAME:
                 case Quasarzone.NEWS_HARDWARE:
                 case Quasarzone.NEWS_MOBILE:
