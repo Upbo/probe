@@ -11,8 +11,7 @@
 <img src="./screenshots/5_mainWithData.png" width="200px"/>
 <img src="./screenshots/7_result1.png" width="200px"/>
 <img src="./screenshots/8_web2.png" width="200px"/>
-</div>
-<br><br>
+</div><br>
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites) <br>
 Android Studio<br><br>
 Java Development Kit<br><br>
