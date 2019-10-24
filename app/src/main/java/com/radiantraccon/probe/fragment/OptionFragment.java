@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SeekBarPreference;
 
 import com.radiantraccon.probe.CrawlOption;
 import com.radiantraccon.probe.R;
@@ -19,14 +22,19 @@ import com.radiantraccon.probe.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OptionFragment extends Fragment {
+public class OptionFragment extends PreferenceFragmentCompat {
 
 
     public OptionFragment() {
         // Required empty public constructor
     }
 
-
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences, rootKey);
+        SeekBarPreference seekBarPreference = findPreference("pagesPerCrawl");
+    }
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +52,6 @@ public class OptionFragment extends Fragment {
             }
         });
         return view;
-    }
+    }*/
 
 }
