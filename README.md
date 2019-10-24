@@ -24,7 +24,7 @@ RecyclerView관련 데이터 클래스와 adapter 파일입니다.
 
 ## 저작권 및 사용권 정보 (Copyright / End User License)
 GNU General Public License v3.0  
-자세한 내용은 LICENSE.md를 참고해주세요.  
+자세한 내용은 [LICENSE](https://github.com/Upbo/probe/blob/master/LICENSE)를 참고해주세요.  
 
 ## 배포자 및 개발자의 연락처 정보 (Contact Information)
 Hyun Deok Kim - @upbo on GitHub  
@@ -39,5 +39,3 @@ Data관련 파일들을 json파일에 기록할때 append하지 않고 처음부
 크롤링할때마다 Favicon을 불러들이지 않고 미리 다운로드 받아놓은 후 사용  
 json파일 read/write 최적화  
 새로운 사이트 추가  
-
-## 
